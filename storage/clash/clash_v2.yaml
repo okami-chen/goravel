@@ -1,0 +1,123 @@
+port: 7890
+socks-port: 7891
+redir-port: 7892
+tproxy-port: 7893
+allow-lan: false
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+sniffer:
+  enable: true
+  sniffing: [tls, http]
+dns:
+  enable: true
+  ipv6: false
+  default-nameserver: [223.5.5.5, 119.29.29.29, 8.8.8.8]
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter: ['*.lan', '*.linksys.com', +.pool.ntp.org, localhost.ptlogin2.qq.com]
+  nameserver: ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query']
+  fallback: ['https://doh.dns.sb/dns-query', 'https://dns.cloudflare.com/dns-query', 'https://dns.twnic.tw/dns-query', 'tls://8.8.4.4:853']
+  fallback-filter: { geoip: true, ipcidr: [240.0.0.0/4, 0.0.0.0/32] }
+proxies:
+proxy-groups:
+  - { name: '🔰 手动选择', type: select, proxies: [] }
+  - { name: '🌎 守候影院', type: select, proxies: [] }
+  - { name: '🌎 家宽节点', type: select, proxies: [] }
+  - { name: '🌎 全球代理', type: select, proxies: ['🔰 手动选择','🌎 家宽节点'] }
+  - { name: '📽 Netflix', type: select, proxies: ['🔰 手动选择','🌎 家宽节点'] }
+  - { name: '📺 Disney+', type: select, proxies: ['🔰 手动选择','🌎 家宽节点'] }
+  - { name: '🎬 YouTube', type: select, proxies: ['🔰 手动选择','🌎 家宽节点'] }
+  - { name: '📱 Telegram', type: select, proxies: ['🔰 手动选择','🌎 家宽节点'] }
+  - { name: '📺 动画疯', type: select, proxies: ['🔰 手动选择','🌎 家宽节点'] }
+  - { name: '⚛️ ChatGPT', type: select, proxies: ['🔰 手动选择','🌎 家宽节点',] }
+  - { name: '🐟 漏网之鱼', type: select, proxies: ['🔰 手动选择','🌎 家宽节点', DIRECT ] }
+  - { name: 'Ⓜ Microsoft', type: select, proxies: ['🔰 手动选择', DIRECT] }
+  - { name: '📺 Bilibili', type: select, proxies: [DIRECT, '🔰 手动选择'] }
+  - { name: '🎯 游戏平台', type: select, proxies: [DIRECT, '🔰 手动选择'] }
+  - { name: '🍎 Apple', type: select, proxies: [DIRECT, '🔰 手动选择'] }
+
+rule-providers:
+  SteamCN: { type: http, behavior: classical, path: ./providers/rule/Games/SteamCN.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/SteamCN.yaml, interval: 21600 }
+  Steam: { type: http, behavior: classical, path: ./providers/rule/Games/Steam.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/Steam.yaml, interval: 21600 }
+  Blizzard: { type: http, behavior: classical, path: ./providers/rule//Games/Blizzard.yaml, url: http://154.17.13.205:32580/Clash/RuleSet/Extra/Game/Blizzard.yaml, interval: 21600 }
+  Nintendo: { type: http, behavior: classical, path: ./providers/rule/Games/Nintendo.yaml, url: http://154.17.13.205:32580/Clash/RuleSet/Extra/Game/Nintendo.yaml, interval: 21600 }
+  Origin: { type: http, behavior: classical, path: ./providers/rule/Games/Origin.yaml, url: http://154.17.13.205:32580/Clash/RuleSet/Extra/Game/Origin.yaml, interval: 21600 }
+  Xbox: { type: http, behavior: classical, path: ./providers/rule/Games/Xbox.yaml, url: http://154.17.13.205:32580/Clash/RuleSet/Extra/Game/Xbox.yaml, interval: 21600 }
+  Epic: { type: http, behavior: classical, path: ./providers/rule/Games/Epic.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/Epic.yaml, interval: 21600 }
+  Apple: { type: http, behavior: classical, path: ./providers/rule/Apple.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/Apple.yaml, interval: 21600 }
+  Telegram: { type: http, behavior: classical, path: ./providers/rule/Telegram.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/Telegram.yaml, interval: 21600 }
+  Microsoft: { type: http, behavior: classical, path: ./providers/rule/Microsoft.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/Microsoft.yaml, interval: 21600 }
+  OpenAi: { type: http, behavior: classical, path: ./providers/rule/OpenAi.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/OpenAi.yaml, interval: 21600 }
+  Bilibili: { type: http, behavior: classical, path: ./providers/rule/Bilibili.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/Bilibili.yaml, interval: 21600 }
+  YouTube: { type: http, behavior: classical, path: ./providers/rule/YouTube.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/YouTube.yaml, interval: 21600 }
+  Netflix: { type: http, behavior: classical, path: ./providers/rule/Netflix.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/Netflix.yaml, interval: 21600 }
+  Disney: { type: http, behavior: classical, path: ./providers/rule/Disney.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/Ruleset/DisneyPlus.yaml, interval: 21600 }
+  Bahamut: { type: http, behavior: classical, path: ./providers/rule/Bahamut.yaml, url: http://154.17.13.205:32580/Clash/RuleSet/StreamingMedia/Video/Bahamut.yaml, interval: 21600 }
+  ProxyMedia: { type: http, behavior: classical, path: ./providers/rule/ProxyMedia.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/ProxyMedia.yaml, interval: 21600 }
+  ProxyGFWlist: { type: http, behavior: classical, path: ./providers/rule/ProxyGFWlist.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/ProxyGFWlist.yaml, interval: 21600 }
+  Global: { type: http, behavior: classical, path: ./providers/rule/Global.yaml, url: http://154.17.13.205:32580/Clash/RuleSet/Global.yaml, interval: 21600 }
+  ChinaDomain: { type: http, behavior: classical, path: ./providers/rule/ChinaDomain.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/ChinaDomain.yaml, interval: 21600 }
+  ChinaIp: { type: http, behavior: ipcidr, path: ./providers/rule/ChinaIp.yaml, url: http://154.17.13.205:32580/ACL4SSR/Clash/Providers/ChinaIp.yaml, interval: 21600 }
+rules:
+  - 'IP-CIDR,192.168.0.0/16,DIRECT,no-resolve'
+  - 'IP-CIDR,10.0.0.0/8,DIRECT,no-resolve'
+  - 'IP-CIDR,172.16.0.0/12,DIRECT,no-resolve'
+  - 'IP-CIDR,127.0.0.0/8,DIRECT,no-resolve'
+  - 'IP-CIDR,100.64.0.0/10,DIRECT,no-resolve'
+  - 'IP-CIDR6,::1/128,DIRECT,no-resolve'
+  - 'IP-CIDR6,fc00::/7,DIRECT,no-resolve'
+  - 'IP-CIDR6,fe80::/10,DIRECT,no-resolve'
+  - 'IP-CIDR6,fd00::/8,DIRECT,no-resolve'
+  - 'DOMAIN-SUFFIX,cm.steampowered.com,DIRECT'
+  - 'DOMAIN-SUFFIX,steamserver.net,DIRECT'
+  - 'DOMAIN-SUFFIX,sh.cn,DIRECT'
+  - 'DOMAIN-SUFFIX,gov.cn,DIRECT'
+  - 'DOMAIN-SUFFIX,iggm.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,nwgold.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,mmowts.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,utnice.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,acnh.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,poecurrency.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,goldrs.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,newworldcoins.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,mmoah.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,d4gold.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,gameceo.com,🌎 家宽节点'
+  - 'DOMAIN-SUFFIX,ooklaserver.net,🌎 全球代理'
+  - 'DOMAIN-SUFFIX,speedtest.net,🌎 全球代理'
+  - 'DOMAIN-SUFFIX,skk.moe,🌎 全球代理'
+  - 'DOMAIN-SUFFIX,ip.sb,🌎 全球代理'
+  - 'DOMAIN-SUFFIX,cf-ns.com,🌎 全球代理'
+  - 'DOMAIN-SUFFIX,ipinfo.io,🌎 全球代理'
+  - 'DOMAIN-SUFFIX,cn2gias.uk,🌎 守候影院'
+  - 'DOMAIN-SUFFIX,baidu.com,🌎 全球代理'
+  - 'DOMAIN,pubstatic.b0.upaiyun.com,🌎 全球代理'
+  - 'DOMAIN,2023.ip138.com,🌎 全球代理'
+  - 'DOMAIN,forge.speedtest.cn,🌎 全球代理'
+  - 'DOMAIN,rmcvqq.sbs,DIRECT'
+  - 'RULE-SET,SteamCN,DIRECT'
+  - 'RULE-SET,Telegram,📱 Telegram'
+  - 'DOMAIN-SUFFIX,telegram.org,📱 Telegram'
+  - 'RULE-SET,Netflix,📽 Netflix'
+  - 'RULE-SET,Disney,📺 Disney+'
+  - 'RULE-SET,YouTube,🎬 YouTube'
+  - 'RULE-SET,Bilibili,📺 Bilibili'
+  - 'RULE-SET,Bahamut,📺 动画疯'
+  - 'RULE-SET,OpenAi,⚛️ ChatGPT'
+  - 'DOMAIN-SUFFIX,oaistatic.com,⚛️ ChatGPT'
+  - 'DOMAIN-SUFFIX,oaiusercontent.com,⚛️ ChatGPT'
+  - 'RULE-SET,Microsoft,Ⓜ Microsoft'
+  - 'RULE-SET,Apple,🍎 Apple'
+  - 'RULE-SET,Steam,🎯 游戏平台'
+  - 'RULE-SET,Blizzard,🎯 游戏平台'
+  - 'RULE-SET,Nintendo,🎯 游戏平台'
+  - 'RULE-SET,Origin,🎯 游戏平台'
+  - 'DOMAIN-SUFFIX,ea.com,🎯 游戏平台'
+  - 'RULE-SET,Xbox,🎯 游戏平台'
+  - 'RULE-SET,Epic,🎯 游戏平台'
+  - 'RULE-SET,ProxyMedia,🌎 全球代理'
+  - 'RULE-SET,ProxyGFWlist,🌎 全球代理'
+  - 'RULE-SET,Global,🌎 全球代理'
+  - 'GEOIP,CN,DIRECT'
+  - 'MATCH,🐟 漏网之鱼'

@@ -22,8 +22,10 @@ import (
 	"github.com/goravel/framework/testing"
 	"github.com/goravel/framework/validation"
 	"github.com/goravel/gin"
-
+	"github.com/goravel/redis"
 	"goravel/app/providers"
+	"goravel/packages/clash"
+	"goravel/packages/cron"
 )
 
 // Boot Start all init methods of the current folder to bootstrap all config.
@@ -54,7 +56,7 @@ func init() {
 		// Here you may specify the default timezone for your application.
 		// Example: UTC, Asia/Shanghai
 		// More: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-		"timezone": carbon.UTC,
+		"timezone": carbon.PRC,
 
 		// Encryption Key
 		//
@@ -71,6 +73,7 @@ func init() {
 			&log.ServiceProvider{},
 			&console.ServiceProvider{},
 			&database.ServiceProvider{},
+			&redis.ServiceProvider{},
 			&cache.ServiceProvider{},
 			&http.ServiceProvider{},
 			&route.ServiceProvider{},
@@ -95,6 +98,8 @@ func init() {
 			&providers.ValidationServiceProvider{},
 			&providers.DatabaseServiceProvider{},
 			&gin.ServiceProvider{},
+			&clash.ServiceProvider{},
+			&cron.ServiceProvider{},
 		},
 	})
 }

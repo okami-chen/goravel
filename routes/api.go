@@ -8,5 +8,5 @@ import (
 
 func Api() {
 	userController := controllers.NewUserController()
-	facades.Route().Get("/users/{id}", userController.Show)
+	facades.Route().Get("/user", userController.Index)
 }

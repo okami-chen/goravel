@@ -12,7 +12,7 @@ func init() {
 		// This option defines the default log channel that gets used when writing
 		// messages to the logs. The name specified in this option should match
 		// one of the channels defined in the "channels" configuration array.
-		"default": config.Env("LOG_CHANNEL", "stack"),
+		"default": config.Env("LOG_CHANNEL", "daily"),
 
 		// Log Channels
 		//
@@ -26,13 +26,13 @@ func init() {
 			},
 			"single": map[string]any{
 				"driver": "single",
-				"path":   "storage/logs/goravel.log",
+				"path":   "storage/logs/app.log",
 				"level":  config.Env("LOG_LEVEL", "debug"),
 				"print":  true,
 			},
 			"daily": map[string]any{
 				"driver": "daily",
-				"path":   "storage/logs/goravel.log",
+				"path":   "storage/logs/app.log",
 				"level":  config.Env("LOG_LEVEL", "debug"),
 				"days":   7,
 				"print":  true,
