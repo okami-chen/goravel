@@ -88,10 +88,23 @@ func (r *ClashController) Index(ctx http.Context) http.Response {
 	if s != "" {
 		var mGroup = make(map[string][]models.Proxy)
 		var mOther = make([]models.Proxy, 0)
-		for k1, v1 := range tool.GetNameReplaces() {
-			s = strings.Replace(s, k1, v1, -1)
+		var emoji []models.Emoji
+		t2 := strings.Split(s, ".")
+		em := facades.Orm().WithContext(ctx).Query()
+		c2 := models.Condition{}
+		em.Where(c2.ConditionsEqOr("code", t2)).Find(&emoji)
+
+		hmap := make(map[string]string)
+
+		for _, s3 := range emoji {
+			hmap[s3.Code] = s3.Country
 		}
-		t2 := strings.Split(s, "|")
+
+		for i2, s2 := range t2 {
+			if _, ok := hmap[s2]; ok {
+				t2[i2] = hmap[s2]
+			}
+		}
 
 		for _, v2 := range obj {
 			var found bool
