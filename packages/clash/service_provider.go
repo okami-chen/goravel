@@ -31,5 +31,14 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 	route.Get("/qx", qxCtr.Index)
 
 	pingCtr := controllers.PingController{}
-	route.Post("/ping", pingCtr.Index)
+	route.Get("/ping", pingCtr.Index)
+
+	infoCtr := controllers.InfoController{}
+	route.Get("/info", infoCtr.Index)
+
+	locCtr := controllers.LocController{}
+	route.Get("/loc", locCtr.Index)
+
+	nodeCtr := controllers.NodeController{}
+	route.Get("/node", nodeCtr.Index)
 }
