@@ -57,6 +57,13 @@ func getSubscriptInfo(values string) string {
 	return fmt.Sprintf(fstr, upload, download, total, now.Timestamp())
 }
 
+func getClash(clashYaml data.ClashYaml, proxies []models.Proxy) data.ClashYaml {
+	for _, proxy := range proxies {
+		clashYaml = processProxy(clashYaml, proxy)
+	}
+	return clashYaml
+}
+
 func processProxy(clashYaml data.ClashYaml, proxy models.Proxy) data.ClashYaml {
 	var ret map[string]interface{}
 	json.Unmarshal([]byte(proxy.Body), &ret)

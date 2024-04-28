@@ -26,6 +26,8 @@ import (
 	"goravel/app/providers"
 	"goravel/packages/clash"
 	"goravel/packages/cron"
+	"goravel/packages/jwt"
+	"goravel/packages/websocket"
 )
 
 // Boot Start all init methods of the current folder to bootstrap all config.
@@ -100,6 +102,8 @@ func init() {
 			&gin.ServiceProvider{},
 			&clash.ServiceProvider{},
 			&cron.ServiceProvider{},
+			&jwt.ServiceProvider{},
+			&websocket.ServiceProvider{},
 		},
 	})
 }

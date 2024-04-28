@@ -14,10 +14,6 @@ type InfoController struct {
 	//Dependent services
 }
 
-type ClasNodeList struct {
-	Proxies []map[string]interface{} `yaml:"proxies"`
-}
-
 func NewInfoController() *InfoController {
 	return &InfoController{
 		//Inject services
