@@ -41,6 +41,7 @@ type Proxy struct {
 	Id        int             `gorm:"column:id;primary_key;AUTO_INCREMENT;NOT NULL;comment:'编号'"`
 	Status    int             `gorm:"column:status;default:1;NOT NULL;comment:'状态'"`
 	Title     string          `gorm:"column:title;NOT NULL;comment:'分组'"`
+	Code      string          `gorm:"column:code;NOT NULL;comment:'分组'"`
 	Tag       *string         `gorm:"column:tag;default:NULL;comment:'标签'"`
 	Ip        *string         `gorm:"column:ip;default:NULL;comment:'ip'"`
 	Isp       *string         `gorm:"column:isp;default:NULL;comment:'isp'"`

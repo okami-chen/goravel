@@ -15,13 +15,11 @@ import (
 )
 
 type SubController struct {
-	//Dependent services
+	BaseController
 }
 
 func NewSubController() *SubController {
-	return &SubController{
-		//Inject services
-	}
+	return &SubController{}
 }
 
 type ClasNodeList struct {
@@ -29,6 +27,7 @@ type ClasNodeList struct {
 }
 
 func (r *SubController) Index(ctx http.Context) http.Response {
+	r.Ctx = ctx
 	cache := facades.Cache().WithContext(ctx)
 	cacheKey := ctx.Request().Url()
 	sec := ctx.Request().Input("key")
@@ -41,35 +40,46 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 		return ctx.Response().Data(403, contentType, nil)
 	}
 	request := ctx.Request()
-	c := request.Input("c")
+	in := request.Input("in")
+	out := request.Input("out")
 	if cls == "" && cache.Has(cacheKey) {
 		return ctx.Response().
-			Header("subscription-userinfo", getSubscriptInfo(c)).
+			Header("subscription-userinfo", r.getSubInfo(in)).
 			Data(200, contentType, []byte(cache.Get(cacheKey).(string)))
 	}
 	proxies := make([]models.Proxy, 0)
 	if strings.Contains(cacheKey, "bee") {
-		c = "a.e.m.g"
+		in = "a.e.m.g"
 	}
 	q := request.Input("q")
+	s := request.Input("s")
+
 	if q != "" {
 		emojis := services.FindEmojiByCode(q, ctx)
-		proxies = services.List(emojis, c, ctx)
+		proxies = services.List(emojis, in, out, ctx)
 		proxies = services.SortByEmoji(emojis, proxies)
 	}
-	s := request.Input("s")
 	if s != "" {
 		emojis := services.FindEmojiByCode(s, ctx)
-		proxies = services.List(nil, c, ctx)
+		proxies = services.List(nil, in, out, ctx)
 		proxies = services.SortByEmoji(emojis, proxies)
 	}
 	if q == "" && s == "" {
-		proxies = services.List(nil, c, ctx)
+		proxies = services.List(nil, in, out, ctx)
 	}
+
 	flag := request.Input("flag")
+	agent := strings.ToLower(request.Input("agent"))
+
+	if strings.Contains(agent, "clash") {
+		flag = "clash"
+	}
+	if strings.Contains(agent, "quantumult") {
+		flag = "qx"
+	}
 	resp := ""
 	if flag == "qx" || flag == "quantumultx" {
-		resp = getQuantumultX(proxies, "")
+		resp = r.getQuantumultX(proxies, "")
 		cache.Put(cacheKey, resp, 600)
 	} else if flag == "node" {
 		nodeList := ClasNodeList{}
@@ -95,13 +105,13 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 			return ctx.Response().Success().Data("text/plain;charset=utf-8", []byte(""))
 		}
 		yaml.Unmarshal(content, &clashYaml)
-		clashYaml = getClash(clashYaml, proxies)
+		clashYaml = r.getClash(clashYaml, proxies)
 		bt, _ := yaml.Marshal(clashYaml)
 		err = cache.Put(cacheKey, string(bt), time.Minute*60)
 		resp = string(bt)
 	}
 
 	return ctx.Response().
-		Header("subscription-userinfo", getSubscriptInfo(c)).
+		Header("subscription-userinfo", r.getSubInfo(in)).
 		Data(200, contentType, []byte(resp))
 }

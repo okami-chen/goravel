@@ -19,14 +19,19 @@ func StrToInterface(str []string) []interface{} {
 
 // FindEmojiByCode 通过代码获取国旗
 func FindEmojiByCode(code string, ctx http.Context) []interface{} {
+
 	if code == "" {
 		return nil
 	}
+
+	//转换成数组
+	code = strings.ToUpper(code)
 	codes := strings.Split(code, ".")
 	values := make([]interface{}, len(codes))
 	for i, v := range codes {
 		values[i] = v
 	}
+
 	// 如果是emoji直接返回
 	match, _ := regexp.MatchString("^[a-zA-Z]+$", values[0].(string))
 	if !match {
@@ -34,18 +39,32 @@ func FindEmojiByCode(code string, ctx http.Context) []interface{} {
 	}
 	var emoji []models.Emoji
 	query := facades.Orm().WithContext(ctx).Query()
-	query.Where(clause.IN{
+	query = query.Where(clause.IN{
 		Column: "code",
 		Values: values,
-	}).Find(&emoji)
+	})
+	query.Find(&emoji)
+	// 按照入参排序
+	sort := make(map[string]string, 0)
 	em := []interface{}{}
 	for _, v := range emoji {
-		em = append(em, v.Emoji)
+		sort[v.Code] = v.Emoji
 	}
+
+	// 排序
+	for _, val := range values {
+		if exist, ok := sort[val.(string)]; ok {
+			em = append(em, exist)
+		}
+	}
+
 	return em
 }
 
 func SortByEmoji(emojis []interface{}, proxies []models.Proxy) []models.Proxy {
+	if emojis == nil || len(emojis) == 0 {
+		return proxies
+	}
 	result := []models.Proxy{}
 	mGroup := make(map[string][]models.Proxy)
 	mOther := make([]models.Proxy, 0)

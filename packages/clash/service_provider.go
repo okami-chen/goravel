@@ -33,16 +33,6 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 		route.Get("/loc", locCtr.Index)
 	})
 
-	clashCtr := controllers.ClashController{}
-	route.Get("/clash", clashCtr.Index)
-	route.Get("/bee", clashCtr.Index)
-
-	nodeCtr := controllers.NodeController{}
-	route.Get("/node", nodeCtr.Index)
-
-	qxCtr := controllers.QXController{}
-	route.Get("/qx", qxCtr.Index)
-
 	subCtr := controllers.SubController{}
 	route.Get("/sub", subCtr.Index)
 

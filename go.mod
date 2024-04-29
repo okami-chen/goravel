@@ -14,6 +14,7 @@ require (
 	github.com/goravel/redis v1.1.0
 	github.com/gorilla/websocket v1.5.1
 	github.com/oschwald/geoip2-golang v1.8.0
+	github.com/panjf2000/ants/v2 v2.9.1
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/sony/sonyflake v1.2.0
 	github.com/spf13/cast v1.6.0
