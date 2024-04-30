@@ -70,7 +70,7 @@ func Setup() {
 			Name:           target,
 			InvokeTarget:   target,
 			Args:           `{"name":"hello"}`,
-			CronExpression: "*/5 * * * * *",
+			CronExpression: "*/3 * * * * *",
 			MisfirePolicy:  0,
 			Content:        "",
 		}
@@ -85,10 +85,6 @@ func Setup() {
 		}
 		facades.Log().Infof("id: %d, job: %s", id, target)
 	}
-	// 其中任务
-	c.Start()
-	facades.Log().Info("任务启动")
-	// 关闭任务
 }
 
 func (h *ExecJob) addJob(c *cron.Cron) (int, error) {

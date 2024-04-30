@@ -6,9 +6,10 @@ import (
 	"github.com/goravel/framework/facades"
 	"github.com/robfig/cron/v3"
 	"goravel/packages/cron/console/commands"
+	"goravel/packages/cron/job"
 )
 
-const Binding = "cron"
+const Binding = "cron.core"
 
 var App foundation.Application
 
@@ -22,11 +23,12 @@ func (receiver *ServiceProvider) Register(app foundation.Application) {
 		return nil, nil
 	})
 
-	app.Singleton(Binding+".core", func(app foundation.Application) (any, error) {
+	app.Singleton(Binding, func(app foundation.Application) (any, error) {
 		secondParser := cron.NewParser(cron.Second | cron.Minute |
 			cron.Hour | cron.Dom | cron.Month | cron.DowOptional | cron.Descriptor)
 		return cron.New(cron.WithParser(secondParser), cron.WithChain()), nil
 	})
+	job.InitJob()
 	facades.Validation()
 }
 
@@ -34,4 +36,6 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 	app.Commands([]console.Command{
 		&commands.TestCommand{},
 	})
+	job.Setup()
+
 }

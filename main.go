@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/goravel/framework/facades"
-
 	"goravel/bootstrap"
 )
 

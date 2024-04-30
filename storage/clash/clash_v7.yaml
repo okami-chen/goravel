@@ -21,19 +21,23 @@ proxies:
 proxy-groups:
   - { name: 手动选择, type: select, proxies: [] }
   - { name: 家宽节点, type: select, proxies: [] }
+  - { name: 家宽甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 0.1, proxies: [] }
   - { name: 狮城节点, type: select, proxies: [] }
+  - { name: 狮城甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 0.1, proxies: [] }
   - { name: 香港节点, type: select, proxies: [] }
+  - { name: 香港甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 0.1, proxies: [] }
   - { name: 美国节点, type: select, proxies: [] }
-  - { name: 狮城节点, type: select, proxies: [] }
-  - { name: Business, type: select, proxies: [家宽节点, 手动选择] }
-  - { name: YouTube, type: select, proxies: [手动选择, 美国节点] }
+  - { name: 美国甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 0.1, proxies: [] }
+  - { name: Business, type: select, proxies: [家宽节点, 家宽甄选, 手动选择] }
+  - { name: Google, type: select, proxies: [手动选择, 美国节点, 狮城节点, 美国甄选, 狮城甄选 ] }
+  - { name: YouTube, type: select, proxies: [手动选择, 美国节点, 狮城节点, 美国甄选, 狮城甄选 ] }
   - { name: Netflix, type: select, proxies: [手动选择] }
   - { name: Disney, type: select, proxies: [手动选择] }
   - { name: Twitch, type: select, proxies: [手动选择]}
-  - { name: ChatGpt, type: select, proxies: [手动选择] }
+  - { name: ChatGpt, type: select, proxies: [手动选择, 美国节点, 狮城节点, 美国甄选, 狮城甄选] }
   - { name: Spotify, type: select, proxies: [手动选择, DIRECT] }
   - { name: Discord, type: select, proxies: [手动选择 ] }
-  - { name: Telegram, type: select, proxies: [手动选择, 狮城节点 ] }
+  - { name: Telegram, type: select, proxies: [手动选择, 狮城节点, 狮城甄选] }
   - { name: Instagram, type: select, proxies: [手动选择 ] }
   - { name: Facebook, type: select, proxies: [手动选择 ] }
   - { name: Twitter, type: select, proxies: [手动选择 ] }
@@ -46,12 +50,11 @@ proxy-groups:
   - { name: Steam, type: select, proxies: [手动选择, DIRECT ] }
   - { name: Dazn, type: select, proxies: [手动选择 ] }
   - { name: Paypal, type: select, proxies: [DIRECT, 手动选择 ] }
-  - { name: TikTok, type: select, proxies: [DIRECT, 手动选择, 狮城节点, 美国节点 ] }
+  - { name: TikTok, type: select, proxies: [DIRECT, 手动选择, 狮城节点, 美国节点, 狮城甄选, 美国甄选 ] }
   - { name: Bilibili, type: select, proxies: [DIRECT, 手动选择 ] }
-  - { name: Google, type: select, proxies: [手动选择, 美国节点 ] }
   - { name: Apple服务, type: select, proxies: [DIRECT, 手动选择 ] }
   - { name: Microsoft, type: select, proxies: [DIRECT, 手动选择 ] }
-  - { name: Final, type: select, proxies: [手动选择, 狮城节点, 美国节点, DIRECT ] }
+  - { name: Final, type: select, proxies: [手动选择, 香港节点, 家宽节点, 狮城节点, 美国节点, 香港甄选, 狮城甄选, 家宽甄选, 美国甄选, DIRECT ] }
 rules:
   - 'DOMAIN-SUFFIX,ghcr.io,手动选择'
   - 'DOMAIN-SUFFIX,ip-api.com,手动选择'

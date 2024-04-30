@@ -1,12 +1,9 @@
 package models
 
 import (
-	"fmt"
 	event "github.com/goravel/framework/contracts/database/orm"
 	"github.com/goravel/framework/database/orm"
 	"github.com/goravel/framework/support/carbon"
-	"github.com/goravel/framework/support/json"
-	"reflect"
 	"strings"
 )
 
@@ -58,35 +55,6 @@ type Proxy struct {
 
 func (p *Proxy) TableName() string {
 	return "ue_proxy"
-}
-
-func (p *Proxy) ToArray() map[string]interface{} {
-	result := make(map[string]interface{})
-	t := reflect.TypeOf(*p)
-	v := reflect.ValueOf(*p)
-	for i := 0; i < t.NumField(); i++ {
-		field := t.Field(i)
-		value := v.Field(i).Interface()
-		if field.Name == "SoftDeletes" {
-			continue
-		}
-		if reflect.TypeOf(value).Name() == "string" {
-			strValue := value.(string)
-			if strings.Contains(strValue, "{") {
-				s := make(map[string]interface{})
-				err := json.UnmarshalString(strValue, &s)
-				if err == nil {
-					result[field.Name] = s
-					fmt.Println(field.Name + " : success")
-					continue
-				} else {
-					fmt.Println(field.Name + " : " + err.Error())
-				}
-			}
-		}
-		result[field.Name] = value
-	}
-	return result
 }
 
 func (u *Proxy) DispatchesEvents() map[event.EventType]func(event.Event) error {

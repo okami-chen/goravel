@@ -27,6 +27,7 @@ import (
 	"goravel/packages/clash"
 	"goravel/packages/cron"
 	"goravel/packages/jwt"
+	asqueue "goravel/packages/queue"
 	"goravel/packages/websocket"
 )
 
@@ -104,6 +105,7 @@ func init() {
 			&cron.ServiceProvider{},
 			&jwt.ServiceProvider{},
 			&websocket.ServiceProvider{},
+			&asqueue.ServiceProvider{},
 		},
 	})
 }
