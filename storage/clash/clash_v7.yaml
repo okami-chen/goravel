@@ -21,13 +21,13 @@ proxies:
 proxy-groups:
   - { name: 手动选择, type: select, proxies: [] }
   - { name: 家宽节点, type: select, proxies: [] }
-  - { name: 家宽甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 0.1, proxies: [] }
+  - { name: 家宽甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 20, proxies: [] }
   - { name: 狮城节点, type: select, proxies: [] }
-  - { name: 狮城甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 0.1, proxies: [] }
+  - { name: 狮城甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 20, proxies: [] }
   - { name: 香港节点, type: select, proxies: [] }
-  - { name: 香港甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 0.1, proxies: [] }
+  - { name: 香港甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 20, proxies: [] }
   - { name: 美国节点, type: select, proxies: [] }
-  - { name: 美国甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 0.1, proxies: [] }
+  - { name: 美国甄选, type: url-test, url: http://www.github.com,interval: 600, tolerance: 20, proxies: [] }
   - { name: Business, type: select, proxies: [家宽节点, 家宽甄选, 手动选择] }
   - { name: Google, type: select, proxies: [手动选择, 美国节点, 狮城节点, 美国甄选, 狮城甄选 ] }
   - { name: YouTube, type: select, proxies: [手动选择, 美国节点, 狮城节点, 美国甄选, 狮城甄选 ] }

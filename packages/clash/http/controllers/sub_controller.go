@@ -8,6 +8,8 @@ import (
 	"goravel/app/models"
 	"goravel/data"
 	"goravel/packages/clash/services"
+	"goravel/pkg/proxy"
+	"goravel/pkg/tool"
 	"io"
 	"os"
 	"strings"
@@ -40,14 +42,17 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 		return ctx.Response().Data(403, contentType, nil)
 	}
 	request := ctx.Request()
-	in := request.Input("in")
-	out := request.Input("out")
+	in := request.Input("f")
+	out := request.Input("e")
 	if cls == "" && cache.Has(cacheKey) {
 		return ctx.Response().
 			Header("subscription-userinfo", r.getSubInfo(in)).
 			Data(200, contentType, []byte(cache.Get(cacheKey).(string)))
 	}
 	proxies := make([]models.Proxy, 0)
+	if in == "" {
+		in = "c.d.e.h"
+	}
 	if strings.Contains(cacheKey, "bee") {
 		in = "a.e.m.g"
 	}
@@ -78,19 +83,38 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 		flag = "qx"
 	}
 	resp := ""
+	tag := r.Ctx.Request().Input("tag")
 	if flag == "qx" || flag == "quantumultx" {
 		resp = r.getQuantumultX(proxies, "")
 		cache.Put(cacheKey, resp, 600)
 	} else if flag == "node" {
 		nodeList := ClasNodeList{}
-		for _, item := range proxies {
+		for _, row := range proxies {
+			if tag != "" && !(strings.Contains(row.Name, "原生") || strings.Contains(row.Name, "家宽")) {
+				continue
+			}
 			var ret map[string]interface{}
-			json.Unmarshal([]byte(item.Body), &ret)
+			json.Unmarshal([]byte(row.Body), &ret)
 			nodeList.Proxies = append(nodeList.Proxies, ret)
 		}
 		bt, _ := yaml.Marshal(nodeList)
 		cache.Put(cacheKey, string(bt), time.Minute*60)
 		resp = string(bt)
+	} else if flag == "ss" {
+		for _, row := range proxies {
+			if tag != "" && !(strings.Contains(row.Name, "原生") || strings.Contains(row.Name, "家宽")) {
+				continue
+			}
+			var ret map[string]interface{}
+			json.Unmarshal([]byte(row.Body), &ret)
+			px, e := proxy.ParseProxyFromClashProxy(ret)
+			if e != nil {
+				continue
+			}
+			resp = resp + px.Link() + "\n"
+		}
+		resp = strings.Trim(resp, "\n")
+		resp = tool.Base64EncodeString(resp, true)
 	} else {
 		fileName := "storage/clash/clash_v6.yaml"
 		if request.Input("l") != "" {

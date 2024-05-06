@@ -24,7 +24,6 @@ proxy-groups:
   - { name: 狮城节点, type: select, proxies: [] }
   - { name: 香港节点, type: select, proxies: [] }
   - { name: 美国节点, type: select, proxies: [] }
-  - { name: 狮城节点, type: select, proxies: [] }
   - { name: Business, type: select, proxies: [家宽节点, 手动选择] }
   - { name: YouTube, type: select, proxies: [手动选择, 美国节点] }
   - { name: Netflix, type: select, proxies: [手动选择] }

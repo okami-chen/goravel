@@ -45,17 +45,23 @@ func (r BaseController) getSubInfo(values string) string {
 			now = info.ExpireAt.Carbon
 		}
 	}
+	//tb := 1024 * 1024 * 1024 * 1024 * 106
 
 	fstr := "upload=%d; download=%d; total=%d ; expire=%d"
+	days := int64((60 * 60 * 24 * 365) * 6)
 
-	return fmt.Sprintf(fstr, upload, download, total, now.Timestamp())
+	return fmt.Sprintf(fstr, upload, download, total, now.Timestamp()+days)
 }
 
 func (r BaseController) getQuantumultX(l []models.Proxy, resp string) string {
 	if len(l) < 1 {
 		return resp
 	}
+	tag := r.Ctx.Request().Input("tag")
 	for _, row := range l {
+		if tag != "" && !(strings.Contains(row.Name, "原生") || strings.Contains(row.Name, "家宽")) {
+			continue
+		}
 		var j map[string]interface{}
 		json.Unmarshal([]byte(row.Body), &j)
 		p, _ := proxy.ParseProxyFromClashProxy(j)
@@ -66,8 +72,12 @@ func (r BaseController) getQuantumultX(l []models.Proxy, resp string) string {
 
 func (r BaseController) getClash(clashYaml data.ClashYaml, proxies []models.Proxy) data.ClashYaml {
 	facades.Orm().WithContext(r.Ctx).Query().Find(&r.Countries)
-	for _, proxy := range proxies {
-		clashYaml = r.processProxy(clashYaml, proxy)
+	for _, row := range proxies {
+		tag := r.Ctx.Request().Input("tag")
+		if tag != "" && !(strings.Contains(row.Name, "原生") || strings.Contains(row.Name, "家宽")) {
+			continue
+		}
+		clashYaml = r.processProxy(clashYaml, row)
 	}
 	return clashYaml
 }
@@ -77,21 +87,22 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 	json.Unmarshal([]byte(proxy.Body), &ret)
 	clashYaml.Proxies = append(clashYaml.Proxies, ret)
 	clashYaml.ProxyGroups[0].Proxies = append(clashYaml.ProxyGroups[0].Proxies, proxy.Name)
-	for i, pg1 := range clashYaml.ProxyGroups {
-		if strings.Contains(pg1.Name, "家宽") && strings.Contains(proxy.Name, "家宽") {
+	for i, group := range clashYaml.ProxyGroups {
+		if strings.Contains(group.Name, "家宽") && strings.Contains(proxy.Name, "家宽") {
 			clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 		}
-		if strings.Contains(pg1.Name, "狮城") && strings.Contains(proxy.Name, "新加坡") {
+		if strings.Contains(group.Name, "狮城") && strings.Contains(proxy.Name, "新加坡") {
 			clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 		}
-		if strings.Contains(pg1.Name, "守候") && proxy.Code == "h" {
+		if strings.Contains(group.Name, "守候") && proxy.Code == "h" {
 			clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 		}
 		for _, country := range r.Countries {
 			if strings.Contains(country.Country, "新加坡") {
 				continue
 			}
-			if strings.Contains(pg1.Name, country.Country) && strings.Contains(proxy.Name, country.Country) {
+			if strings.Contains(group.Name, country.Country) && strings.Contains(proxy.Name, country.Country) {
+				fmt.Println(group.Name, country.Country)
 				clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 			}
 		}
