@@ -34,6 +34,14 @@ func List(names []interface{}, in, out string, ctx http.Context) []models.Proxy 
 			Values: StrToInterface(strings.Split(out, ".")),
 		}))
 	}
+
+	if ctx.Request().Input("tag") != "" {
+		var more []clause.Expression
+		more = append(more, clause.Like{Column: "name", Value: "%家宽%"})
+		more = append(more, clause.Like{Column: "name", Value: "%原生%"})
+		query = query.Where(clause.Or(more...))
+	}
+
 	query.Order("name").Find(&list)
 	return list
 }

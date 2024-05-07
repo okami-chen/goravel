@@ -57,11 +57,7 @@ func (r BaseController) getQuantumultX(l []models.Proxy, resp string) string {
 	if len(l) < 1 {
 		return resp
 	}
-	tag := r.Ctx.Request().Input("tag")
 	for _, row := range l {
-		if tag != "" && !(strings.Contains(row.Name, "原生") || strings.Contains(row.Name, "家宽")) {
-			continue
-		}
 		var j map[string]interface{}
 		json.Unmarshal([]byte(row.Body), &j)
 		p, _ := proxy.ParseProxyFromClashProxy(j)
@@ -73,10 +69,6 @@ func (r BaseController) getQuantumultX(l []models.Proxy, resp string) string {
 func (r BaseController) getClash(clashYaml data.ClashYaml, proxies []models.Proxy) data.ClashYaml {
 	facades.Orm().WithContext(r.Ctx).Query().Find(&r.Countries)
 	for _, row := range proxies {
-		tag := r.Ctx.Request().Input("tag")
-		if tag != "" && !(strings.Contains(row.Name, "原生") || strings.Contains(row.Name, "家宽")) {
-			continue
-		}
 		clashYaml = r.processProxy(clashYaml, row)
 	}
 	return clashYaml
@@ -102,7 +94,6 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 				continue
 			}
 			if strings.Contains(group.Name, country.Country) && strings.Contains(proxy.Name, country.Country) {
-				fmt.Println(group.Name, country.Country)
 				clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 			}
 		}
