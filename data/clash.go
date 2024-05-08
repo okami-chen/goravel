@@ -23,8 +23,9 @@ type ClashYaml struct {
 		Nameserver        []string `yaml:"nameserver"`
 		Fallback          []string `yaml:"fallback"`
 		FallbackFilter    struct {
-			Geoip  bool     `yaml:"geoip"`
-			Ipcidr []string `yaml:"ipcidr"`
+			Geoip   bool     `yaml:"geoip"`
+			GeoCode string   `yaml:"geo-code"`
+			Ipcidr  []string `yaml:"ipcidr"`
 		} `yaml:"fallback-filter"`
 	} `yaml:"dns"`
 	Proxies     []map[string]interface{} `yaml:"proxies"`
