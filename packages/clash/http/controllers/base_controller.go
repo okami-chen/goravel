@@ -79,21 +79,31 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 	json.Unmarshal([]byte(proxy.Body), &ret)
 	clashYaml.Proxies = append(clashYaml.Proxies, ret)
 	clashYaml.ProxyGroups[0].Proxies = append(clashYaml.ProxyGroups[0].Proxies, proxy.Name)
+	_, eu, _ := sort()
+	euMap := strings.Split(eu, ".")
 	for i, group := range clashYaml.ProxyGroups {
 		if strings.Contains(group.Name, "家宽") && strings.Contains(proxy.Name, "家宽") {
 			clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 		}
-		if strings.Contains(group.Name, "狮城") && strings.Contains(proxy.Name, "新加坡") {
+		if strings.Contains(group.Name, "狮城") && strings.Contains(proxy.Name, "🇸🇬") {
 			clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 		}
 		if strings.Contains(group.Name, "守候") && proxy.Code == "h" {
 			clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 		}
+		if strings.Contains(group.Name, "欧盟") {
+			for _, emoji := range euMap {
+				if strings.Contains(proxy.Name, emoji) {
+					clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
+					break
+				}
+			}
+		}
 		for _, country := range r.Countries {
-			if strings.Contains(country.Country, "新加坡") {
+			if country.Code == "SG" {
 				continue
 			}
-			if strings.Contains(group.Name, country.Country) && strings.Contains(proxy.Name, country.Country) {
+			if strings.Contains(group.Name, country.Country) && strings.Contains(proxy.Name, country.Emoji) {
 				clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 			}
 		}

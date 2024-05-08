@@ -40,6 +40,8 @@ type Proxy struct {
 	Title     string          `gorm:"column:title;NOT NULL;comment:'分组'"`
 	Code      string          `gorm:"column:code;NOT NULL;comment:'分组'"`
 	Tag       *string         `gorm:"column:tag;default:NULL;comment:'标签'"`
+	Country   *string         `gorm:"column:country;default:NULL;comment:'国家'"`
+	City      *string         `gorm:"column:city;default:NULL;comment:'城市'"`
 	Ip        *string         `gorm:"column:ip;default:NULL;comment:'ip'"`
 	Isp       *string         `gorm:"column:isp;default:NULL;comment:'isp'"`
 	Name      string          `gorm:"column:name;NOT NULL;comment:'名称'"`

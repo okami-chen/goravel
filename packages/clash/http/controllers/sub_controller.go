@@ -20,6 +20,13 @@ type SubController struct {
 	BaseController
 }
 
+func sort() (string, string, string) {
+	as := "🇸🇬.🇭🇰.🇲🇴.🇨🇳.🇯🇵.🇰🇷.🇺🇸"
+	eu := "🇬🇧.🇪🇸.🇦🇹.🇧🇪.🇨🇿.🇩🇰.🇫🇮.🇫🇷.🇩🇪.🇮🇪.🇮🇹.🇱🇹.🇱🇺.🇳🇱.🇵🇱.🇸🇪.🇬🇷.🇭🇺.🇱🇻.🇵🇹.🇸🇰.🇸🇮.🇭🇷.🇷🇴.🇧🇬.🇨🇾.🇲🇹"
+	ot := "🇦🇺.🇨🇦.🇲🇾.🇮🇳"
+	return as, eu, ot
+}
+
 func NewSubController() *SubController {
 	return &SubController{}
 }
@@ -57,18 +64,28 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 	q := request.Input("q")
 	s := request.Input("s")
 
+	if q == "quick" {
+		as, eu, ot := sort()
+		q = as + "." + eu + "." + ot
+	}
+
 	if q != "" {
 		emojis := services.FindEmojiByCode(q, ctx)
 		proxies = services.List(emojis, in, out, ctx)
 		proxies = services.SortByEmoji(emojis, proxies)
 	}
-	if s != "" {
+
+	if q == "" && s != "" {
 		emojis := services.FindEmojiByCode(s, ctx)
 		proxies = services.List(nil, in, out, ctx)
 		proxies = services.SortByEmoji(emojis, proxies)
 	}
 	if q == "" && s == "" {
+		as, eu, ot := sort()
+		s = as + "." + eu + "." + ot
+		emojis := services.FindEmojiByCode(s, ctx)
 		proxies = services.List(nil, in, out, ctx)
+		proxies = services.SortByEmoji(emojis, proxies)
 	}
 
 	flag := request.Input("flag")
