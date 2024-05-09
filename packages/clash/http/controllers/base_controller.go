@@ -48,9 +48,9 @@ func (r BaseController) getSubInfo(values string) string {
 	//tb := 1024 * 1024 * 1024 * 1024 * 106
 
 	fstr := "upload=%d; download=%d; total=%d ; expire=%d"
-	days := int64((60 * 60 * 24 * 365) * 6)
+	days := int64((60 * 60 * 24 * 365) * 1)
 
-	return fmt.Sprintf(fstr, upload, download, total, now.Timestamp()+days)
+	return fmt.Sprintf(fstr, 0, total-download-upload, total, now.Timestamp()+days)
 }
 
 func (r BaseController) getQuantumultX(l []models.Proxy, resp string) string {

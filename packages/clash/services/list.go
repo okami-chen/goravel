@@ -22,10 +22,23 @@ func List(names []interface{}, in, out string, ctx http.Context) []models.Proxy 
 	}
 
 	if in != "" {
-		query = query.Where(clause.IN{
-			Column: "code",
-			Values: StrToInterface(strings.Split(in, ".")),
-		})
+		//codes := strings.Split(in, ".")
+		//query = query.Where(clause.IN{
+		//	Column: "code",
+		//	Values: StrToInterface(codes),
+		//})
+
+		for _, code := range codes {
+			if strings.Contains(code, "m") {
+				val := strings.Replace(code, "m", "", 1)
+				var conds []clause.Expression
+				conds = append(conds, clause.Eq{Column: "code", Value: val})
+				query.OrWhere(clause.And(conds...))
+			} else {
+				query = query.OrWhere("code = ?", code)
+			}
+		}
+
 	}
 
 	if out != "" {
