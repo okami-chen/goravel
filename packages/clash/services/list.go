@@ -12,6 +12,32 @@ func List(names []interface{}, in, out string, ctx http.Context) []models.Proxy 
 
 	query := facades.Orm().WithContext(ctx).Query()
 	var list []models.Proxy
+
+	if in != "" {
+		codes := strings.Split(in, ".")
+		//query = query.Where(clause.IN{
+		//	Column: "code",
+		//	Values: StrToInterface(codes),
+		//})
+		var wheres []clause.Expression
+		for _, c := range codes {
+			//带m标识指定家宽或者原生
+			if strings.Contains(c, "m") {
+				val := strings.Replace(c, "m", "", 1)
+				var conds []clause.Expression
+				conds = append(conds, clause.Eq{Column: "code", Value: val})
+				conds = append(conds, clause.Or(
+					clause.Like{Column: "name", Value: "%家宽%"},
+					clause.Like{Column: "name", Value: "%原生%"},
+				))
+				wheres = append(wheres, clause.Or(clause.And(conds...)))
+			} else {
+				wheres = append(wheres, clause.Or(clause.Eq{Column: "code", Value: c}))
+			}
+		}
+		query = query.Where(clause.And(wheres...))
+	}
+
 	if names != nil && len(names) > 0 {
 		var conds []clause.Expression
 		for _, v := range names {
@@ -19,26 +45,6 @@ func List(names []interface{}, in, out string, ctx http.Context) []models.Proxy 
 			conds = append(conds, clause.Like{Column: "name", Value: lk})
 		}
 		query = query.Where(clause.Or(conds...))
-	}
-
-	if in != "" {
-		//codes := strings.Split(in, ".")
-		//query = query.Where(clause.IN{
-		//	Column: "code",
-		//	Values: StrToInterface(codes),
-		//})
-
-		for _, code := range codes {
-			if strings.Contains(code, "m") {
-				val := strings.Replace(code, "m", "", 1)
-				var conds []clause.Expression
-				conds = append(conds, clause.Eq{Column: "code", Value: val})
-				query.OrWhere(clause.And(conds...))
-			} else {
-				query = query.OrWhere("code = ?", code)
-			}
-		}
-
 	}
 
 	if out != "" {
