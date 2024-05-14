@@ -8,6 +8,7 @@ import (
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	"goravel/pkg/healthcheck"
+	"time"
 )
 
 type LocController struct {
@@ -48,7 +49,7 @@ func (r *LocController) Index(ctx http.Context) http.Response {
 	}
 
 	url := "https://travel-eye.org/ip.json?token=zhegemeiyouyongde"
-	body, err := healthcheck.HTTPGetBodyViaProxy(px, url)
+	body, err := healthcheck.HTTPGetBodyViaProxyWithTime(px, url, time.Second*2)
 	if err != nil {
 		return ctx.Response().Json(500, gin.H{
 			"message": err.Error(),

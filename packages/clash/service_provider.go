@@ -26,17 +26,17 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 	route := app.MakeRoute()
 
 	route.Prefix("/geo").Group(func(route router.Router) {
-		infoCtr := controllers.InfoController{}
+		infoCtr := controllers.NewInfoController()
 		route.Get("/info", infoCtr.Index)
 
-		locCtr := controllers.LocController{}
+		locCtr := controllers.NewLocController()
 		route.Get("/loc", locCtr.Index)
 	})
 
-	subCtr := controllers.SubController{}
+	subCtr := controllers.NewSubController()
 	route.Get("/sub", subCtr.Index)
 
-	pingCtr := controllers.PingController{}
+	pingCtr := controllers.NewPingController()
 	route.Get("/ping", pingCtr.Index)
 
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/goravel/framework/facades"
 	"goravel/app/models"
 	"goravel/pkg/healthcheck"
+	"time"
 )
 
 type InfoController struct {
@@ -50,7 +51,7 @@ func (r *InfoController) Index(ctx http.Context) http.Response {
 	url := "http://ip-api.com/json/?lang=zh-CN&fields=status,message,continent,continentCode,country,countryCode"
 	url = url + ",region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse"
 	url = url + ",mobile,proxy,hosting,query"
-	body, err := healthcheck.HTTPGetBodyViaProxy(px, url)
+	body, err := healthcheck.HTTPGetBodyViaProxyWithTime(px, url, time.Second*2)
 	if err != nil {
 		return ctx.Response().Json(500, gin.H{
 			"message": err.Error(),
