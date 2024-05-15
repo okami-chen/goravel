@@ -1,2 +1,2 @@
 #!/bin/bash
-GOOS=linux GOARCH=amd64 go build -ldflags '-w -s' -o linux main.go
+GOOS=linux GOARCH=amd64 go build -ldflags '-w -s' -o clash main.go
