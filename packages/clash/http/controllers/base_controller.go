@@ -114,12 +114,27 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 				}
 			}
 		}
+
+		if strings.Contains(group.Name, "影院") {
+			if strings.Contains(proxy.Name, "S0") || strings.Contains(proxy.Name, "S1") {
+				if clashYaml.ProxyGroups[i].Proxies[0] == "DIRECT" {
+					clashYaml.ProxyGroups[i].Proxies[0] = proxy.Name
+				} else {
+					clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
+				}
+			}
+		}
+
 		for _, country := range r.Countries {
 			if country.Code == "SG" {
 				continue
 			}
 			if strings.Contains(group.Name, country.Country) && strings.Contains(proxy.Name, country.Emoji) {
-				clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
+				if clashYaml.ProxyGroups[i].Proxies[0] == "DIRECT" {
+					clashYaml.ProxyGroups[i].Proxies[0] = proxy.Name
+				} else {
+					clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
+				}
 			}
 		}
 	}

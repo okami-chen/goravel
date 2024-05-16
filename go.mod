@@ -17,6 +17,7 @@ require (
 	github.com/hibiken/asynq v0.24.1
 	github.com/oschwald/geoip2-golang v1.8.0
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/shadowsocks/go-shadowsocks2 v0.1.5
 	github.com/sony/sonyflake v1.2.0
 	github.com/spf13/cast v1.6.0
 	github.com/stretchr/testify v1.9.0
@@ -139,11 +140,13 @@ require (
 	github.com/redis/go-redis/v9 v9.0.3 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5 // indirect
+	github.com/riobard/go-bloom v0.0.0-20200614022211-cdc8013cb5b3 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/rotisserie/eris v0.5.4 // indirect
 	github.com/rs/cors v1.11.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/savioxavier/termlink v1.3.0 // indirect
+	github.com/shadowsocks/simple-obfs v0.0.5 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect

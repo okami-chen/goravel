@@ -289,7 +289,7 @@ func HTTPGetBodyViaProxyWithTime(clashProxy C.Proxy, url string, t time.Duration
 		// Note: Dial specifies the dial function for creating unencrypted TCP connections.
 		// When httpClient sets this transport, it will use the tcp/udp connection returned from
 		// function Dial instead of default tcp/udp connection. It's the key to set custom proxy for http transport
-		Dial: func(string, string) (net.Conn, error) {
+		DialContext: func(ctx context.Context, network, url string) (net.Conn, error) {
 			return conn, nil
 		},
 		// from http.DefaultTransport
