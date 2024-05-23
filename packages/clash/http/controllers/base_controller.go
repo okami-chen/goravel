@@ -82,14 +82,8 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 	_, eu, _ := sort()
 	euMap := strings.Split(eu, ".")
 	for i, group := range clashYaml.ProxyGroups {
-		if strings.Contains(group.Name, "家宽") && strings.Contains(proxy.Name, "家宽") {
-			if clashYaml.ProxyGroups[i].Proxies[0] == "DIRECT" {
-				clashYaml.ProxyGroups[i].Proxies[0] = proxy.Name
-			} else {
-				clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
-			}
-		}
-		if strings.Contains(group.Name, "原生") && strings.Contains(proxy.Name, "原生") {
+		if strings.Contains(group.Name, "家宽") &&
+			(strings.Contains(proxy.Name, "家宽") || strings.Contains(proxy.Name, "原生")) {
 			if clashYaml.ProxyGroups[i].Proxies[0] == "DIRECT" {
 				clashYaml.ProxyGroups[i].Proxies[0] = proxy.Name
 			} else {
@@ -97,9 +91,6 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 			}
 		}
 		if strings.Contains(group.Name, "狮城") && strings.Contains(proxy.Name, "🇸🇬") {
-			clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
-		}
-		if strings.Contains(group.Name, "守候") && proxy.Code == "h" {
 			clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 		}
 		if strings.Contains(group.Name, "欧盟") {

@@ -56,6 +56,13 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 	//		Header("subscription-userinfo", r.getSubInfo(in)).
 	//		Data(200, contentType, []byte(cache.Get(cacheKey).(string)))
 	//}
+
+	//ua := strings.ToLower(request.Header("User-Agent"))
+	//facades.Log().Info(ua)
+	//if strings.Contains(ua, "Windows") || strings.Contains(ua, "AppleWebKit") {
+	//	return ctx.Response().Data(403, contentType, nil)
+	//}
+
 	proxies := make([]models.Proxy, 0)
 
 	if strings.Contains(cacheKey, "bee") {

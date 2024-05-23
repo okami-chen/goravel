@@ -147,9 +147,8 @@ external-controller: '127.0.0.1:9090'
 proxies:
 proxy-groups:
   - { name: Proxies, type: select, proxies: [] }
-  - { name: 手动选择, type: select, proxies: [Proxies, 原生节点, 家宽节点, 香港节点, 狮城节点, 美国节点, 台湾节点, 日本节点, 欧盟节点] }
+  - { name: 手动选择, type: select, proxies: [Proxies, 家宽节点, 香港节点, 狮城节点, 美国节点, 台湾节点, 日本节点, 欧盟节点] }
   - { name: 家宽节点, type: select, proxies: [DIRECT] }
-  - { name: 原生节点, type: select, proxies: [DIRECT] }
   - { name: 狮城节点, type: select, proxies: [DIRECT] }
   - { name: 美国节点, type: select, proxies: [DIRECT] }
   - { name: 香港节点, type: select, proxies: [DIRECT] }
@@ -157,12 +156,12 @@ proxy-groups:
   - { name: 台湾节点, type: select, proxies: [DIRECT] }
   - { name: 欧盟节点, type: select, proxies: [DIRECT] }
   - { name: 影院节点, type: select, proxies: [DIRECT] }
-  - { name: Business, type: select, proxies: [家宽节点, 原生节点, 手动选择] }
+  - { name: Business, type: select, proxies: [家宽节点, 手动选择] }
   - { name: Telegram, type: select, proxies: [手动选择, 狮城节点 ] }
   - { name: GitHub, type: select, proxies: [手动选择, 美国节点 ] }
-  - { name: Google, type: select, proxies: [手动选择, 香港节点, 美国节点, 狮城节点, 原生节点, 家宽节点] }
-  - { name: YouTube, type: select, proxies: [手动选择, 香港节点, 美国节点, 狮城节点, 原生节点, 家宽节点] }
-  - { name: ChatGpt, type: select, proxies: [手动选择, 香港节点, 狮城节点, 原生节点, 家宽节点, 美国节点 ] }
+  - { name: Google, type: select, proxies: [手动选择, 香港节点, 美国节点, 狮城节点, 家宽节点] }
+  - { name: YouTube, type: select, proxies: [手动选择, 香港节点, 美国节点, 狮城节点, 家宽节点] }
+  - { name: ChatGpt, type: select, proxies: [手动选择, 香港节点, 狮城节点, 家宽节点, 美国节点 ] }
   - { name: BiliBili, type: select, proxies: [DIRECT, 手动选择, 台湾节点, 香港节点, 狮城节点, 美国节点 ] }
   - { name: Netflix, type: select, proxies: [手动选择] }
   - { name: Disney, type: select, proxies: [手动选择] }
@@ -180,12 +179,12 @@ proxy-groups:
   - { name: 動畫瘋, type: select, proxies: [手动选择, 香港节点 ] }
   - { name: Steam, type: select, proxies: [手动选择, DIRECT ] }
   - { name: Dazn, type: select, proxies: [手动选择 ] }
-  - { name: Paypal, type: select, proxies: [手动选择, 原生节点, 家宽节点, 美国节点, DIRECT ] }
+  - { name: Paypal, type: select, proxies: [手动选择, 家宽节点, 美国节点, DIRECT ] }
   - { name: TikTok, type: select, proxies: [手动选择, 狮城节点, 美国节点, DIRECT] }
   - { name: Apple, type: select, proxies: [DIRECT, 手动选择 ] }
   - { name: Apple Update, type: select, proxies: [DIRECT, 手动选择, REJECT ] }
   - { name: Microsoft, type: select, proxies: [DIRECT, 手动选择 ] }
-  - { name: Final, type: select, proxies: [手动选择, 香港节点, 狮城节点, 原生节点, 家宽节点, 美国节点, 欧盟节点, DIRECT ] }
+  - { name: Final, type: select, proxies: [手动选择, 香港节点, 狮城节点, 家宽节点, 美国节点, 欧盟节点, DIRECT ] }
 rule-providers:
   OpenAi: { type: http, behavior: classical, path: ./providers/rule/OpenAi.yaml, url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AI.yaml, interval: 21600 }
   Telegram: { type: http, behavior: classical, path: ./providers/rule/Telegram.yaml, url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml, interval: 21600 }
@@ -313,6 +312,7 @@ rules:
   - 'DOMAIN-SUFFIX,mmoah.com,Business'
   - 'DOMAIN-SUFFIX,d4gold.com,Business'
   - 'DOMAIN-SUFFIX,gameceo.com,Business'
+  - 'DOMAIN-SUFFIX,fifasell.com,Business'
   - 'DOMAIN-SUFFIX,cn2gias.uk,影院节点'
   - 'GEOIP,CN,DIRECT'
   - 'MATCH,Final'

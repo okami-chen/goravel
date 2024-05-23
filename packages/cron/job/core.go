@@ -1,6 +1,8 @@
 package job
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/goravel/framework/facades"
 	"github.com/robfig/cron/v3"
 	"time"
@@ -43,11 +45,16 @@ func (e *ExecJob) Run() {
 	var obj = jobList[e.InvokeTarget]
 	err := CallExec(obj.(JobsExec), e.Args, e.Content)
 	if err != nil {
-		facades.Log().Errorf("任务错误: %s", err.Error())
+		facades.Log().Errorf("错误: %s", err.Error())
 		Remove(e.cron, e.EntryId)
 	} else {
 		latencyTime := time.Now().Sub(startTime)
-		facades.Log().Infof("任务耗时: %s -> %fms", e.InvokeTarget, latencyTime.Seconds()*1000)
+		result := make(map[string]interface{})
+		result["name"] = e.InvokeTarget
+		ts := fmt.Sprintf("0.4f", latencyTime.Seconds()*1000, 'f', -1, 64)
+		result["time"] = ts + "ms"
+		j, _ := json.Marshal(result)
+		facades.Log().Infof("耗时: %s", j)
 	}
 	if e.MisfirePolicy == 1 {
 		Remove(e.cron, e.EntryId)

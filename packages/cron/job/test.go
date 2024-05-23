@@ -12,7 +12,7 @@ type CronTestHandle struct {
 
 func (t CronTestHandle) Exec(arg any, content any) error {
 	j, _ := json.Marshal(map[string]any{"date": carbon.Now().ToDateTimeString()})
-	facades.Log().Info(string(j))
+	facades.Log().Info("参数: " + string(j))
 
 	return nil
 }

@@ -37,5 +37,7 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 		&commands.TestCommand{},
 	})
 	job.Setup()
+	c, _ := app.Make(Binding)
+	c.(*cron.Cron).Start()
 
 }
