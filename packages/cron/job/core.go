@@ -49,9 +49,9 @@ func (e *ExecJob) Run() {
 		Remove(e.cron, e.EntryId)
 	} else {
 		latencyTime := time.Now().Sub(startTime)
-		result := make(map[string]interface{})
+		result := make(map[string]string)
 		result["name"] = e.InvokeTarget
-		ts := fmt.Sprintf("0.4f", latencyTime.Seconds()*1000, 'f', -1, 64)
+		ts := fmt.Sprintf("%.4f", latencyTime.Seconds()*1000)
 		result["time"] = ts + "ms"
 		j, _ := json.Marshal(result)
 		facades.Log().Infof("耗时: %s", j)

@@ -25,7 +25,6 @@ import (
 	"github.com/goravel/redis"
 	"goravel/app/providers"
 	"goravel/packages/clash"
-	"goravel/packages/cron"
 )
 
 // Boot Start all init methods of the current folder to bootstrap all config.
@@ -99,7 +98,7 @@ func init() {
 			&providers.DatabaseServiceProvider{},
 			&gin.ServiceProvider{},
 			&clash.ServiceProvider{},
-			&cron.ServiceProvider{},
+			//&cron.ServiceProvider{},
 			//&jwt.ServiceProvider{},
 			//&websocket.ServiceProvider{},
 			//&asqueue.ServiceProvider{},
