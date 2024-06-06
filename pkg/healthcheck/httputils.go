@@ -212,6 +212,11 @@ func HTTPGetBodyViaProxyWithTime(clashProxy C.Proxy, url string, t time.Duration
 	}
 	req = req.WithContext(ctx)
 	req.Header.Set("User-Agent", getRandomUserAgent())
+	cookie := &http.Cookie{
+		Name:  "g2g_regional",
+		Value: "%7B%22country%22%3A%22US%22%2C%22currency%22%3A%22USD%22%2C%22language%22%3A%22en%22%7D",
+	}
+	req.Header.Add("Cookie", cookie.String())
 	transport := &http.Transport{
 		DialContext: func(ctx context.Context, network, url string) (net.Conn, error) {
 			return conn, nil

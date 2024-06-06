@@ -43,6 +43,6 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 	route.Get("/sub", subCtr.Index)
 
 	pingCtr := controllers.NewPingController()
-	route.Get("/ping", pingCtr.Index)
+	route.Post("/ping", pingCtr.Index)
 
 }

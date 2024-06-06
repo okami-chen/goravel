@@ -91,7 +91,11 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 			}
 		}
 		if strings.Contains(group.Name, "狮城") && strings.Contains(proxy.Name, "🇸🇬") {
-			clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
+			if clashYaml.ProxyGroups[i].Proxies[0] == "DIRECT" {
+				clashYaml.ProxyGroups[i].Proxies[0] = proxy.Name
+			} else {
+				clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
+			}
 		}
 		if strings.Contains(group.Name, "欧盟") {
 			for _, emoji := range euMap {

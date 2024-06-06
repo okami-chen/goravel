@@ -166,19 +166,19 @@ proxy-groups:
   - { name: Netflix, type: select, proxies: [手动选择] }
   - { name: Disney, type: select, proxies: [手动选择] }
   - { name: Twitch, type: select, proxies: [手动选择]}
-  - { name: Spotify, type: select, proxies: [手动选择, 美国节点, DIRECT] }
-  - { name: Discord, type: select, proxies: [手动选择, 美国节点 ] }
-  - { name: Instagram, type: select, proxies: [手动选择, 美国节点 ] }
-  - { name: Facebook, type: select, proxies: [手动选择, 美国节点 ] }
-  - { name: Twitter, type: select, proxies: [手动选择, 美国节点 ] }
-  - { name: Whatsapp, type: select, proxies: [手动选择, 美国节点 ] }
-  - { name: Line, type: select, proxies: [手动选择, 美国节点 ] }
-  - { name: LinkedIn, type: select, proxies: [手动选择 ] }
-  - { name: HBO, type: select, proxies: [手动选择 ] }
-  - { name: Abama, type: select, proxies: [手动选择 ] }
+  - { name: Spotify, type: select, proxies: [手动选择, 狮城节点, 美国节点, DIRECT] }
+  - { name: Discord, type: select, proxies: [手动选择, 狮城节点, 美国节点 ] }
+  - { name: Instagram, type: select, proxies: [手动选择, 狮城节点, 美国节点 ] }
+  - { name: Facebook, type: select, proxies: [手动选择, 狮城节点, 美国节点 ] }
+  - { name: Twitter, type: select, proxies: [手动选择, 狮城节点, 美国节点 ] }
+  - { name: Whatsapp, type: select, proxies: [手动选择, 狮城节点, 美国节点 ] }
+  - { name: Line, type: select, proxies: [手动选择, 狮城节点, 美国节点 ] }
+  - { name: LinkedIn, type: select, proxies: [手动选择 , 狮城节点] }
+  - { name: HBO, type: select, proxies: [手动选择 , 狮城节点] }
+  - { name: Abama, type: select, proxies: [手动选择 , 狮城节点] }
   - { name: 動畫瘋, type: select, proxies: [手动选择, 香港节点 ] }
   - { name: Steam, type: select, proxies: [手动选择, DIRECT ] }
-  - { name: Dazn, type: select, proxies: [手动选择 ] }
+  - { name: Dazn, type: select, proxies: [手动选择, 狮城节点 ] }
   - { name: Paypal, type: select, proxies: [手动选择, 家宽节点, 美国节点, DIRECT ] }
   - { name: TikTok, type: select, proxies: [手动选择, 狮城节点, 美国节点, DIRECT] }
   - { name: Apple, type: select, proxies: [DIRECT, 手动选择 ] }
@@ -240,12 +240,13 @@ rules:
   - 'RULE-SET,SystemOTA,Apple Update'
   - 'RULE-SET,Direct,DIRECT'
   - 'RULE-SET,Lan,DIRECT'
-  - 'RULE-SET,Advertising,REJECT'
+#  - 'RULE-SET,Advertising,REJECT'
+  - 'DOMAIN,connect.fifasell.com,DIRECT'
   - 'DOMAIN-SUFFIX,ghcr.io,手动选择'
+  - 'DOMAIN-SUFFIX,g2g.com,手动选择'
   - 'DOMAIN-SUFFIX,ip-api.com,手动选择'
   - 'DOMAIN-SUFFIX,skk.moe,手动选择'
   - 'DOMAIN-SUFFIX,speedtest.cn,手动选择'
-  - 'DOMAIN-SUFFIX,ip138.com,手动选择'
   - 'DOMAIN-SUFFIX,upaiyun.com,手动选择'
   - 'DOMAIN-SUFFIX,cf-ns.com,手动选择'
   - 'DOMAIN-SUFFIX,ip.sb,手动选择'
@@ -312,7 +313,6 @@ rules:
   - 'DOMAIN-SUFFIX,mmoah.com,Business'
   - 'DOMAIN-SUFFIX,d4gold.com,Business'
   - 'DOMAIN-SUFFIX,gameceo.com,Business'
-  - 'DOMAIN-SUFFIX,fifasell.com,Business'
   - 'DOMAIN-SUFFIX,cn2gias.uk,影院节点'
   - 'GEOIP,CN,DIRECT'
   - 'MATCH,Final'
