@@ -48,7 +48,7 @@ func (r *PingController) Index(ctx http.Context) http.Response {
 		})
 	}
 
-	resp, err := healthcheck.HTTPGetBodyViaProxyWithTime(proxy, request.Input("url"), time.Second*5)
+	resp, err := healthcheck.HTTPGetBodyViaProxyWithTimeRetry(proxy, request.Input("url"), time.Second*5, 2)
 	if err != nil {
 		return ctx.Response().Success().Json(gin.H{
 			"success": false,

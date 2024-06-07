@@ -15,7 +15,7 @@ type Base struct {
 	Type    string `yaml:"type" json:"type" gorm:"index"`
 	Country string `yaml:"country,omitempty" json:"country,omitempty" gorm:"index"`
 	Port    int    `yaml:"port" json:"port" gorm:"index"`
-	UDP     bool   `yaml:"udp,omitempty" json:"udp,omitempty"`
+	UDP     bool   `yaml:"udp" json:"udp"`
 	Useable bool   `yaml:"useable,omitempty" json:"useable,omitempty" gorm:"index"`
 }
 

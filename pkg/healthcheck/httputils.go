@@ -192,6 +192,20 @@ func HTTPGetBodyViaProxy(clashProxy C.Proxy, url string) ([]byte, error) {
 	return body, nil
 }
 
+func HTTPGetBodyViaProxyWithTimeRetry(proxy C.Proxy, url string, timeout time.Duration, retries int) ([]byte, error) {
+	var err error
+	var resp []byte
+	for i := 0; i < retries; i++ {
+		resp, err = HTTPGetBodyViaProxyWithTime(proxy, url, timeout)
+		if err == nil {
+			return resp, nil
+		}
+		time.Sleep(time.Second) // 重试之前等待一秒钟
+	}
+
+	return nil, err
+}
+
 func HTTPGetBodyViaProxyWithTime(clashProxy C.Proxy, url string, t time.Duration) ([]byte, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), t)
 	defer cancel()
