@@ -5,6 +5,7 @@ dir=$(pwd)
 scp -P 10022 -o "LogLevel=VERBOSE" ./clash root@36.7.120.174:/root/soft/clash/v2/linux
 scp -P 10022 -o "LogLevel=VERBOSE" ./storage/clash/clash_v6.yaml root@36.7.120.174:/root/soft/clash/v2/storage/clash/clash_v6.yaml
 scp -P 10022 -o "LogLevel=VERBOSE" ./storage/clash/clash_v7.yaml root@36.7.120.174:/root/soft/clash/v2/storage/clash/clash_v7.yaml
+scp -P 10022 -o "LogLevel=VERBOSE" ./storage/clash/clash_v8.yaml root@36.7.120.174:/root/soft/clash/v2/storage/clash/clash_v8.yaml
 ssh -p 10022 root@36.7.120.174 'supervisorctl start goravel'
 
 

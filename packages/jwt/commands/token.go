@@ -3,8 +3,6 @@ package commands
 import (
 	"github.com/goravel/framework/contracts/console"
 	"github.com/goravel/framework/contracts/console/command"
-	"github.com/goravel/framework/facades"
-	"github.com/goravel/gin"
 )
 
 type TokenCommand struct {
@@ -29,7 +27,6 @@ func (receiver *TokenCommand) Extend() command.Extend {
 
 // Handle Execute the console command.
 func (receiver *TokenCommand) Handle(ctx console.Context) error {
-	token, _ := facades.Auth().LoginUsingID(gin.Background(), 1)
-	facades.Log().Infof("Token: %s", token)
+
 	return nil
 }

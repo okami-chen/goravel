@@ -5,64 +5,20 @@ mixed-port: 7893
 allow-lan: false
 mode: Rule
 log-level: info
-ipv6: true
-hosts: null
+ipv6: false
+hosts:
 dns:
   enable: true
-  ipv6: true
-  listen: '0.0.0.0:1053'
+  ipv6: false
+  listen: 0.0.0.0:1053
   use-hosts: true
   default-nameserver:
-#    - 61.132.163.68
-    - 119.28.28.28
     - 119.29.29.29
-    - 223.5.5.5
-    - 223.6.6.6
+    - 8.8.8.8
+    - 1.1.1.1
   nameserver:
-#    - 61.132.163.68
-    - 119.28.28.28
-    - 119.29.29.29
     - 223.5.5.5
-    - 223.6.6.6
-  fallback:
-    - https://dns.pub/dns-query
-    - https://doh.pub/dns-query
-    - https://doh.apad.pro/dns-query
-    - https://dns.alidns.com/dns-query
-    - tls://dns.pub:853
-    - tls://dot.pub:853
-    - tls://dns.alidns.com:853
-#    - 61.132.163.68
-    - 119.28.28.28
     - 119.29.29.29
-    - 223.5.5.5
-    - 223.6.6.6
-  fallback-filter:
-    geoip: true
-    geoip-code: CN
-    ipcidr:
-      - 0.0.0.0/8
-      - 10.0.0.0/8
-      - 100.64.0.0/10
-      - 127.0.0.0/8
-      - 169.254.0.0/16
-      - 172.16.0.0/12
-      - 192.0.0.0/24
-      - 192.0.2.0/24
-      - 192.88.99.0/24
-      - 192.168.0.0/16
-      - 198.18.0.0/15
-      - 198.51.100.0/24
-      - 203.0.113.0/24
-      - 224.0.0.0/4
-      - 233.252.0.0/24
-      - 240.0.0.0/4
-      - 255.255.255.255/32
-      - ::/128
-      - ::1/128
-      - fc00::/7
-      - fe80::/10
-      - ff00::/8
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
     - '*.lan'
@@ -143,7 +99,11 @@ dns:
     - www.bilibili.com
     - api.bilibili.com
     - a.w.bilicdn1.com
-external-controller: '127.0.0.1:9090'
+external-controller: 127.0.0.1:9090
+clash-for-android:
+  append-system-dns: false
+profile:
+  tracing: true
 proxies:
 proxy-groups:
   - { name: Proxies, type: select, proxies: [] }

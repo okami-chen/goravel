@@ -136,7 +136,7 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 		resp = strings.Trim(resp, "\n")
 		resp = tool.Base64EncodeString(resp, true)
 	} else {
-		fileName := "storage/clash/clash_v6.yaml"
+		fileName := "storage/clash/clash_v8.yaml"
 		if request.Input("l") != "" {
 			fileName = "storage/clash/clash_" + request.Input("l") + ".yaml"
 		}
