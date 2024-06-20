@@ -48,10 +48,10 @@ func List(names []interface{}, in, out string, ctx http.Context) []models.Proxy 
 	}
 
 	if out != "" {
-		query = query.Where(clause.Not(clause.IN{
-			Column: "code",
-			Values: StrToInterface(strings.Split(out, ".")),
-		}))
+		for _, c := range strings.Split(out, ".") {
+			lk := "%" + c + "%"
+			query = query.Where("name not like ?", lk)
+		}
 	}
 
 	if ctx.Request().Input("tag") != "" {

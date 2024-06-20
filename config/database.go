@@ -13,16 +13,17 @@ func init() {
 		// Database connections
 		"connections": map[string]any{
 			"mysql": map[string]any{
-				"driver":   "mysql",
-				"host":     config.Env("DB_HOST", "127.0.0.1"),
-				"port":     config.Env("DB_PORT", 3306),
-				"database": config.Env("DB_DATABASE", "forge"),
-				"username": config.Env("DB_USERNAME", ""),
-				"password": config.Env("DB_PASSWORD", ""),
-				"charset":  "utf8mb4",
-				"loc":      "PRC",
-				"prefix":   "",
-				"singular": false, // Table name is singular
+				"driver":    "mysql",
+				"host":      config.Env("DB_HOST", "127.0.0.1"),
+				"port":      config.Env("DB_PORT", 3306),
+				"database":  config.Env("DB_DATABASE", "forge"),
+				"username":  config.Env("DB_USERNAME", ""),
+				"password":  config.Env("DB_PASSWORD", ""),
+				"charset":   "utf8mb4",
+				"collation": "utf8mb4_unicode_ci",
+				"loc":       "PRC",
+				"prefix":    "",
+				"singular":  false, // Table name is singular
 			},
 		},
 

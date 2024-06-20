@@ -16,13 +16,16 @@ import (
 	"time"
 )
 
+var (
+	eu = "🇬🇧.🇪🇸.🇦🇹.🇧🇪.🇨🇿.🇩🇰.🇫🇮.🇫🇷.🇩🇪.🇮🇪.🇮🇹.🇱🇹.🇱🇺.🇳🇱.🇵🇱.🇸🇪.🇬🇷.🇭🇺.🇱🇻.🇵🇹.🇸🇰.🇸🇮.🇭🇷.🇷🇴.🇧🇬.🇨🇾.🇲🇹"
+)
+
 type SubController struct {
 	BaseController
 }
 
 func sort() (string, string, string) {
 	as := "🇺🇸.🇸🇬.🇭🇰.🇲🇴.🇨🇳.🇯🇵.🇰🇷"
-	eu := "🇬🇧.🇪🇸.🇦🇹.🇧🇪.🇨🇿.🇩🇰.🇫🇮.🇫🇷.🇩🇪.🇮🇪.🇮🇹.🇱🇹.🇱🇺.🇳🇱.🇵🇱.🇸🇪.🇬🇷.🇭🇺.🇱🇻.🇵🇹.🇸🇰.🇸🇮.🇭🇷.🇷🇴.🇧🇬.🇨🇾.🇲🇹"
 	ot := "🇦🇺.🇨🇦.🇲🇾"
 	return as, eu, ot
 }
@@ -71,8 +74,12 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 	q := request.Input("q")
 	s := request.Input("s")
 
+	q = strings.Replace(q, "eu", eu, -1)
+	s = strings.Replace(s, "eu", eu, -1)
+	out = strings.Replace(out, "eu", eu, -1)
+
 	if q == "quick" {
-		as, eu, ot := sort()
+		as, _, ot := sort()
 		q = as + "." + eu + "." + ot
 	}
 
@@ -93,7 +100,7 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 		proxies = services.SortByEmoji(emojis, proxies)
 	}
 	if q == "" && s == "" {
-		as, eu, ot := sort()
+		as, _, ot := sort()
 		s = as + "." + eu + "." + ot
 		emojis := services.FindEmojiByCode(s, ctx)
 		proxies = services.List(nil, in, out, ctx)

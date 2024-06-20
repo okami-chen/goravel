@@ -45,7 +45,7 @@ func FindEmojiByCode(code string, ctx http.Context) []interface{} {
 	})
 	query.Find(&emoji)
 	// 按照入参排序
-	sort := make(map[string]string, 0)
+	sort := make(map[string]string)
 	em := []interface{}{}
 	for _, v := range emoji {
 		sort[v.Code] = v.Emoji
