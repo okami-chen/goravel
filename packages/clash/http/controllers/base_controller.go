@@ -78,9 +78,10 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 	var ret map[string]interface{}
 	json.Unmarshal([]byte(proxy.Body), &ret)
 	clashYaml.Proxies = append(clashYaml.Proxies, ret)
-	clashYaml.ProxyGroups[0].Proxies = append(clashYaml.ProxyGroups[0].Proxies, proxy.Name)
-	_, eu, _ := sort()
-	euMap := strings.Split(eu, ".")
+	//clashYaml.ProxyGroups[0].Proxies = append(clashYaml.ProxyGroups[0].Proxies, proxy.Name)
+	_, eus, _ := sort()
+	euMap := strings.Split(eus, ".")
+	added := false
 	for i, group := range clashYaml.ProxyGroups {
 		if strings.Contains(group.Name, "家宽") &&
 			(strings.Contains(proxy.Name, "家宽") || strings.Contains(proxy.Name, "原生")) {
@@ -91,6 +92,7 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 			}
 		}
 		if strings.Contains(group.Name, "狮城") && strings.Contains(proxy.Name, "🇸🇬") {
+			added = true
 			if clashYaml.ProxyGroups[i].Proxies[0] == "DIRECT" {
 				clashYaml.ProxyGroups[i].Proxies[0] = proxy.Name
 			} else {
@@ -105,6 +107,7 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 					} else {
 						clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 					}
+					added = true
 					break
 				}
 			}
@@ -125,11 +128,20 @@ func (r BaseController) processProxy(clashYaml data.ClashYaml, proxy models.Prox
 				continue
 			}
 			if strings.Contains(group.Name, country.Country) && strings.Contains(proxy.Name, country.Emoji) {
+				added = true
 				if clashYaml.ProxyGroups[i].Proxies[0] == "DIRECT" {
 					clashYaml.ProxyGroups[i].Proxies[0] = proxy.Name
 				} else {
 					clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 				}
+			}
+		}
+
+		if strings.Contains(group.Name, "其他") && added == false {
+			if clashYaml.ProxyGroups[i].Proxies[0] == "DIRECT" {
+				clashYaml.ProxyGroups[i].Proxies[0] = proxy.Name
+			} else {
+				clashYaml.ProxyGroups[i].Proxies = append(clashYaml.ProxyGroups[i].Proxies, proxy.Name)
 			}
 		}
 	}

@@ -107,8 +107,8 @@ profile:
   tracing: true
 proxies:
 proxy-groups:
-  - { name: Proxies, type: select, proxies: [] }
-  - { name: 手动选择, type: select, proxies: [Proxies, 美国节点, 香港节点, 狮城节点, 台湾节点, 日本节点, 欧盟节点] }
+#  - { name: Proxies, type: select, proxies: [] }
+  - { name: 手动选择, type: select, proxies: [美国节点, 香港节点, 狮城节点, 台湾节点, 日本节点, 欧盟节点, 其他节点] }
   - { name: 美国节点, type: select, proxies: [DIRECT] }
 #  - { name: 家宽节点, type: select, proxies: [DIRECT] }
   - { name: 狮城节点, type: select, proxies: [DIRECT] }
@@ -116,6 +116,7 @@ proxy-groups:
   - { name: 日本节点, type: select, proxies: [DIRECT] }
   - { name: 台湾节点, type: select, proxies: [DIRECT] }
   - { name: 欧盟节点, type: select, proxies: [DIRECT] }
+  - { name: 其他节点, type: select, proxies: [DIRECT] }
   - { name: 影院节点, type: select, proxies: [DIRECT] }
   - name: 🍎 Apple
     type: select

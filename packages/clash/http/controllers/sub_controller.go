@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	eu = "🇬🇧.🇪🇸.🇦🇹.🇧🇪.🇨🇿.🇩🇰.🇫🇮.🇫🇷.🇩🇪.🇮🇪.🇮🇹.🇱🇹.🇱🇺.🇳🇱.🇵🇱.🇸🇪.🇬🇷.🇭🇺.🇱🇻.🇵🇹.🇸🇰.🇸🇮.🇭🇷.🇷🇴.🇧🇬.🇨🇾.🇲🇹"
+	eu = "🇬🇧.🇪🇸.🇦🇹.🇧🇪.🇨🇿.🇩🇰.🇫🇮.🇫🇷.🇩🇪.🇮🇪.🇮🇹.🇱🇹.🇱🇺.🇳🇱.🇵🇱.🇸🇪.🇬🇷.🇭🇺.🇱🇻.🇵🇹.🇸🇰.🇸🇮.🇭🇷.🇷🇴.🇧🇬.🇨🇾.🇲🇹.🇪🇪"
 )
 
 type SubController struct {
@@ -54,17 +54,6 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 	request := ctx.Request()
 	in := request.Input("f")
 	out := request.Input("e")
-	//if cls == "" && cache.Has(cacheKey) {
-	//	return ctx.Response().
-	//		Header("subscription-userinfo", r.getSubInfo(in)).
-	//		Data(200, contentType, []byte(cache.Get(cacheKey).(string)))
-	//}
-
-	//ua := strings.ToLower(request.Header("User-Agent"))
-	//facades.Log().Info(ua)
-	//if strings.Contains(ua, "Windows") || strings.Contains(ua, "AppleWebKit") {
-	//	return ctx.Response().Data(403, contentType, nil)
-	//}
 
 	proxies := make([]models.Proxy, 0)
 

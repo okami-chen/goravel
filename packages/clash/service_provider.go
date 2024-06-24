@@ -32,6 +32,9 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 		locCtr := controllers.NewLocController()
 		route.Get("/loc", locCtr.Index)
 
+		hubCtr := controllers.NewHubController()
+		route.Get("/hub", hubCtr.Index)
+
 		geoCtr := controllers.NewGeoController()
 		route.Get("/base", geoCtr.Index)
 
