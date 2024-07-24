@@ -6,7 +6,3 @@ scp -P 10022 -o "LogLevel=VERBOSE" ./storage/clash/clash_v6.yaml root@36.7.120.1
 scp -P 10022 -o "LogLevel=VERBOSE" ./storage/clash/clash_v7.yaml root@36.7.120.174:/home/data/scripts/clash/storage/clash/clash_v7.yaml
 scp -P 10022 -o "LogLevel=VERBOSE" ./storage/clash/clash_v8.yaml root@36.7.120.174:/home/data/scripts/clash/storage/clash/clash_v8.yaml
 ssh -p 10022 root@36.7.120.174 'supervisorctl start clash:clash_00'
-
-youfeng@2024
-
-

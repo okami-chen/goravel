@@ -10,7 +10,7 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/gookit/goutil v0.6.15
-	github.com/goravel/framework v1.14.1
+	github.com/goravel/framework v1.14.2
 	github.com/goravel/gin v1.2.1
 	github.com/goravel/redis v1.2.0
 	github.com/gorilla/websocket v1.5.3
@@ -20,7 +20,7 @@ require (
 	github.com/sony/sonyflake v1.2.0
 	github.com/spf13/cast v1.6.0
 	github.com/stretchr/testify v1.9.0
-	google.golang.org/grpc v1.64.0
+	google.golang.org/grpc v1.65.0
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/gorm v1.25.10
 )
@@ -51,7 +51,7 @@ require (
 	github.com/bytedance/sonic v1.11.8 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
 	github.com/catppuccin/go v0.2.0 // indirect
-	github.com/cespare/xxhash/v2 v2.2.0 // indirect
+	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/charmbracelet/bubbles v0.18.0 // indirect
 	github.com/charmbracelet/bubbletea v0.26.4 // indirect
 	github.com/charmbracelet/huh v0.4.2 // indirect

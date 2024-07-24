@@ -2045,6 +2045,7 @@ rules:
   - DOMAIN-SUFFIX,surfsharkdns.com,手动选择
   - DOMAIN-SUFFIX,ess.apple.com,美国节点
   - DOMAIN-SUFFIX,push.apple.com,美国节点
+  - DOMAIN-SUFFIX,cpewm0swayls.us-east-1.rds.amazonaws.com,美国节点
   - GEOIP,CN,China-Websites
 #  - DOMAIN-SUFFIX,iggm.com,家宽节点
 #  - DOMAIN-SUFFIX,nwgold.com,家宽节点
