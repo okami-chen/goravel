@@ -40,6 +40,9 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 
 		scoreCtr := controllers.NewScoreController()
 		route.Get("/score", scoreCtr.Index)
+
+		ipCtr := controllers.NewIpController()
+		route.Get("/ip", ipCtr.Index)
 	})
 
 	subCtr := controllers.NewSubController()
