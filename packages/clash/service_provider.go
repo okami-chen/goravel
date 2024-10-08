@@ -51,4 +51,7 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 	pingCtr := controllers.NewPingController()
 	route.Post("/ping", pingCtr.Index)
 
+	proxyCtr := controllers.NewProxyController()
+	route.Any("/proxy", proxyCtr.Index)
+
 }

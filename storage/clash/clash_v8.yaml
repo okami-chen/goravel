@@ -2036,7 +2036,7 @@ rules:
   - DOMAIN-SUFFIX,wolframalpha.com,Final
   - DOMAIN-SUFFIX,x-art.com,Final
   - DOMAIN-SUFFIX,yimg.com,Final
-#  - IP-CIDR,36.7.120.174/32,家宽节点
+#  - IP-CIDR,cs.131.im/32,家宽节点
   - DOMAIN-SUFFIX,ghcr.io,手动选择
   - DOMAIN-SUFFIX,g2g.com,手动选择
   - DOMAIN-SUFFIX,ip-api.com,手动选择
