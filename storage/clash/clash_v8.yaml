@@ -2048,6 +2048,7 @@ rules:
   - DOMAIN-SUFFIX,ipinfo.io,手动选择
   - DOMAIN-SUFFIX,fastly-analytics.com,手动选择
   - DOMAIN-SUFFIX,surfsharkdns.com,手动选择
+  - DOMAIN-SUFFIX,lootbar.gg,手动选择
   - DOMAIN-SUFFIX,ess.apple.com,美国节点
   - DOMAIN-SUFFIX,push.apple.com,美国节点
   - DOMAIN-SUFFIX,cpewm0swayls.us-east-1.rds.amazonaws.com,美国节点
