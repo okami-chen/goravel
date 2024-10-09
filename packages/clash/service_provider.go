@@ -1,8 +1,10 @@
 package clash
 
 import (
+	"github.com/goravel/framework/contracts/console"
 	"github.com/goravel/framework/contracts/foundation"
 	router "github.com/goravel/framework/contracts/route"
+	"goravel/packages/clash/commands"
 	"goravel/packages/clash/http/controllers"
 )
 
@@ -23,7 +25,19 @@ func (receiver *ServiceProvider) Register(app foundation.Application) {
 
 func (receiver *ServiceProvider) Boot(app foundation.Application) {
 
-	route := app.MakeRoute()
+	registerCommand()
+	registerRouter()
+}
+
+func registerCommand() {
+	App.MakeArtisan().Register([]console.Command{
+		&commands.RequestCommand{},
+	})
+}
+
+func registerRouter() {
+
+	route := App.MakeRoute()
 
 	route.Prefix("/geo").Group(func(route router.Router) {
 		infoCtr := controllers.NewInfoController()
@@ -52,6 +66,6 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 	route.Post("/ping", pingCtr.Index)
 
 	proxyCtr := controllers.NewProxyController()
-	route.Any("/proxy", proxyCtr.Index)
-
+	route.Get("/proxy", proxyCtr.Index)
+	route.Post("/proxy", proxyCtr.Index)
 }
