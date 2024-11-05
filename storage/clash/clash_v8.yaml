@@ -5,7 +5,7 @@ mixed-port: 7893
 allow-lan: false
 mode: Rule
 log-level: info
-ipv6: false
+ipv6: true
 hosts:
 dns:
   enable: true
