@@ -22,7 +22,7 @@ func List(names []interface{}, in, out string, ctx http.Context) []models.Proxy 
 		var wheres []clause.Expression
 		for _, c := range codes {
 			//带m标识指定家宽或者原生
-			if strings.Contains(c, "m") {
+			if strings.Contains(c, "m") && len(c) > 1 {
 				val := strings.Replace(c, "m", "", 1)
 				var conds []clause.Expression
 				conds = append(conds, clause.Eq{Column: "code", Value: val})

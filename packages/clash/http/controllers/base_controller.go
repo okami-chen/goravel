@@ -26,7 +26,9 @@ func (r BaseController) getSubInfo(values string) string {
 	var infos []models.Info
 	search := s.Query()
 	if values != "" {
-		values = strings.Replace(values, "m", "", -1)
+		if len(values) > 1 {
+			values = strings.Replace(values, "m", "", -1)
+		}
 		search = search.Where(clause.IN{
 			Column: "code",
 			Values: services.StrToInterface(strings.Split(values, ".")),
