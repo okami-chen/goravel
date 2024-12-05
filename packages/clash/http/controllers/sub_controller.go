@@ -105,10 +105,16 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 	if strings.Contains(agent, "quantumult") {
 		flag = "qx"
 	}
+	if strings.Contains(agent, "loon") {
+		flag = "loon"
+	}
 	resp := ""
 	if flag == "qx" || flag == "quantumultx" {
 		resp = r.getQuantumultX(proxies, "")
-		cache.Put(cacheKey, resp, 600)
+		cache.Put(cacheKey, resp, time.Minute*30)
+	} else if flag == "loon" {
+		resp = r.getLoon(proxies, "")
+		cache.Put(cacheKey, resp, time.Minute*30)
 	} else if flag == "node" {
 		nodeList := ClasNodeList{}
 		for _, row := range proxies {
@@ -117,7 +123,7 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 			nodeList.Proxies = append(nodeList.Proxies, ret)
 		}
 		bt, _ := yaml.Marshal(nodeList)
-		cache.Put(cacheKey, string(bt), time.Minute*60)
+		cache.Put(cacheKey, string(bt), time.Minute*30)
 		resp = string(bt)
 	} else if flag == "ss" {
 		for _, row := range proxies {
@@ -147,7 +153,7 @@ func (r *SubController) Index(ctx http.Context) http.Response {
 		yaml.Unmarshal(content, &clashYaml)
 		clashYaml = r.getClash(clashYaml, proxies)
 		bt, _ := yaml.Marshal(clashYaml)
-		err = cache.Put(cacheKey, string(bt), time.Minute*60)
+		err = cache.Put(cacheKey, string(bt), time.Minute*30)
 		resp = string(bt)
 	}
 

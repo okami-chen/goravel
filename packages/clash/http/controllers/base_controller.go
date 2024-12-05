@@ -63,7 +63,26 @@ func (r BaseController) getQuantumultX(l []models.Proxy, resp string) string {
 		var j map[string]interface{}
 		json.Unmarshal([]byte(row.Body), &j)
 		p, _ := proxy.ParseProxyFromClashProxy(j)
+		if p.ToQuantumultX() == "" {
+			continue
+		}
 		resp = resp + p.ToQuantumultX() + "\n"
+	}
+	return resp
+}
+
+func (r BaseController) getLoon(l []models.Proxy, resp string) string {
+	if len(l) < 1 {
+		return resp
+	}
+	for _, row := range l {
+		var j map[string]interface{}
+		json.Unmarshal([]byte(row.Body), &j)
+		p, _ := proxy.ParseProxyFromClashProxy(j)
+		if p.ToLoon() == "" {
+			continue
+		}
+		resp = resp + p.ToLoon() + "\n"
 	}
 	return resp
 }

@@ -64,6 +64,26 @@ func (ssr ShadowsocksR) ToQuantumultX() string {
 	return ""
 }
 
+func (ssr ShadowsocksR) ToLoon() string {
+	//ssr1 = ShadowsocksR,example.com,443,aes-256-cfb,"password",protocol=orig, obfs=http_simple,obfs-param=download.windows.com,fast-open=false,udp=true
+	//ssr2 = ShadowsocksR,example.com,10076,aes-128-cfb,"password",protocol=auth_chain_a,protocol-param=9555:loon,obfs=http_post,obfs-param=download.windows.com,fast-open=false,udp=true
+	//节点名称 = 协议，服务器地址，端口，加密方式，密码，protocol = 协议，protocol-param = 协议参数，obfs=混淆，obfs-param=混淆参数
+
+	text := fmt.Sprintf("%s = ShadowsocksR,%s,%d,%s,protocol=%s", ssr.Name, ssr.Server, ssr.Port, ssr.Protocol, ssr.Cipher)
+
+	if len(ssr.ProtocolParam) > 0 {
+		text += ",protocol-param = " + ssr.ProtocolParam
+	}
+	if len(ssr.Obfs) > 0 {
+		text += ",obfs = " + ssr.Obfs
+	}
+	if len(ssr.ObfsParam) > 0 {
+		text += ",obfs-param = " + ssr.ObfsParam
+	}
+	text += fmt.Sprintf(",fast-open=%t,udp=%t", ssr.UDP, ssr.UDP)
+	return text
+}
+
 func (ssr ShadowsocksR) ToSurge() string {
 	return ""
 }

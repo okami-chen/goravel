@@ -119,10 +119,32 @@ func (v Vmess) ToClash() string {
 	}
 	return "- " + string(data)
 }
+
+func (v Vmess) ToLoon() string {
+	//vmess1 = vmess,example.com,10086,aes-128-gcm,"52396e06-041a-4cc2-be5c-8525eb457809"
+	if v.Name == "" {
+		v.Name = v.ServerName
+	}
+	text := fmt.Sprintf("%s = vmess,%s,%d,%s,%s",
+		v.Name, v.Server, v.Port, v.Cipher, `"`+v.UUID+`"`)
+
+	//tcp+tls
+
+	//ws
+	// transport=ws,path=/,host=v3-dy-y.ixigua.com,over-tls=false
+	if v.WSHeaders["Host"] != "" {
+		text = text + fmt.Sprintf(",transport=ws,path=%s,host=%s,over-tls=%t", v.WSPath, v.WSHeaders["Host"], v.TLS)
+	}
+
+	//wss
+
+	return text
+}
+
 func (v Vmess) ToQuantumultX() string {
 	// trojan=example.com:443, password=pwd, over-tls=true, tls-verification=false, fast-open=false, udp-relay=false, tag=节点名称
-	text := fmt.Sprintf("vmess = %s:%d, password=%s, method=aes-128-gcm, fast-open=false, fast-open=false",
-		v.Server, v.Port, v.UUID)
+	text := fmt.Sprintf("vmess = %s:%d, password=%s, method=%s, fast-open=false, fast-open=false",
+		v.Server, v.Port, v.UUID, v.Cipher)
 
 	if v.WSHeaders["Host"] != "" {
 		text = text + fmt.Sprintf(", obfs-host=%s", v.WSHeaders["Host"])

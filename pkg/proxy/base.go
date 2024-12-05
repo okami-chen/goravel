@@ -70,6 +70,7 @@ type Proxy interface {
 	String() string
 	ToClash() string
 	ToQuantumultX() string
+	ToLoon() string
 	ToSurge() string
 	Link() string
 	Identifier() string

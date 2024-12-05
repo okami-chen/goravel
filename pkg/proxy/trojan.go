@@ -24,6 +24,9 @@ type Trojan struct {
 	Password       string   `yaml:"password" json:"password"`
 	ALPN           []string `yaml:"alpn,omitempty" json:"alpn,omitempty"`
 	SNI            string   `yaml:"sni,omitempty" json:"sni,omitempty"`
+	Transport      string   `yaml:"transport,omitempty" json:"transport,omitempty"`
+	Host           string   `yaml:"host,omitempty" json:"host,omitempty"`
+	Path           string   `yaml:"path,omitempty" json:"path,omitempty"`
 	SkipCertVerify bool     `yaml:"skip-cert-verify,omitempty" json:"skip-cert-verify,omitempty"`
 	UDP            bool     `yaml:"udp,omitempty" json:"udp,omitempty"`
 	// Network        string      `yaml:"network,omitempty" json:"network,omitempty"`
@@ -62,6 +65,22 @@ func (t Trojan) ToClash() string {
 		return ""
 	}
 	return "- " + string(data)
+}
+
+func (t Trojan) ToLoon() string {
+	verify := true
+	if t.SkipCertVerify {
+		verify = false
+	}
+	//trojan1 = trojan,example.com,443,"password",transport=tcp,skip-cert-verify=false,sni=example.com,udp=true
+	text := fmt.Sprintf("%s = trojan,%s:%d,%s,transport=%s,skip-cert-verify=%t",
+		t.Name, t.Server, t.Port, `"`+t.Password+`"`, t.Transport, verify)
+	//trojan2 = trojan,example.com,443,"password",transport=ws,path=/,host=micsoft.com,skip-cert-verify=true,sni=example.com,udp=true
+	if t.Transport == "ws" {
+		text += fmt.Sprintf("path=%s,host=%s", t.Path, t.Host)
+	}
+	text += fmt.Sprintf(",sni=%s,udp=%t", t.SNI, t.UDP)
+	return text
 }
 
 func (t Trojan) ToQuantumultX() string {

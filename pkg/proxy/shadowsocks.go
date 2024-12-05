@@ -65,7 +65,21 @@ func (ss Shadowsocks) ToSurge() string {
 	}
 }
 
-// Quantumult X converts proxy to surge proxy string
+func (ss Shadowsocks) ToLoon() string {
+	// Shadowsocks,example.com,443,aes-128-gcm,"password",fast-open=false,udp=true
+	text := fmt.Sprintf("%s = Shadowsocks,%s,%d,%s,%s",
+		ss.Name, ss.Server, ss.Port, ss.Cipher, `"`+ss.Password+`"`)
+	//ssObfs1 = Shadowsocks,example.com,80,aes-128-gcm,"password",obfs-name=http,obfs-host=www.micsoft.com,fast-open=true,udp=true
+	// ssObfs2 = Shadowsocks,example.com,443,aes-128-gcm,"password",obfs-name=tls,obfs-host=www.micsoft.com,fast-open=true,udp=true
+	if ss.Plugin == "obfs" {
+		if ss.PluginOpts["host"].(string) != "" {
+			text += ",obfs-name=" + ss.PluginOpts["mode"].(string) + ",obfs-host=" + ss.PluginOpts["host"].(string)
+		}
+	}
+	text = text + fmt.Sprintf(",fast-open=%t,udp=%t", ss.UDP, ss.UDP)
+	return text
+}
+
 func (ss Shadowsocks) ToQuantumultX() string {
 	// shadowsocks = bjdata1.fc-server.xyz:11059, method=aes-128-gcm, password=xxx, obfs=http, obfs-host=xxx, fast-open=true, udp-relay=true, tag=xxx
 	text := fmt.Sprintf("shadowsocks = %s:%d, method=%s, password=%s, udp-relay=%t, fast-open=%t",
